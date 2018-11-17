@@ -1,5 +1,7 @@
 window.addEventListener('load', () => {
-    Game.init()
+    Game.sprite = new Image(); // creating new imae assigned to Game object
+    Game.sprite.onload = Game.init; // make sure that game is started after source image is loaded
+    Game.sprite.src = '/src/img/bombe.png'; // sprite image source
 });
 
 // basic game window properties used as template to build further functions
@@ -10,18 +12,21 @@ VAR = {
     scale: 1, // to make sure that game elements are pasted in right scale
     lastTime: 0,
     rand: (min, max) => {
-        return Math.floor(Math.random() * (max - min + 1)) + min;
+        return Math.floor(Math.random() * (max - min + 1)) + min; // random number generator function
     }
 }
 
 // Game is an object created to store all necessary game properties and methods
 Game = {
-    init: () => { // started just after loading window
-        Game.canvas = document.createElement('canvas');
+    init: () => { 
+        Game.canvas = document.createElement('canvas'); // setting up canvas
         Game.ctx = Game.canvas.getContext('2d');
-        Game.layout(); // make sure that game window is responsive
+        Game.layout(); // resizing game window if browser window gets resized
         window.addEventListener('resize', Game.layout);
         document.body.appendChild(Game.canvas);
+
+Game.toDraw = {}; // stores all characters and elements to be drawn during the game
+
         Game.animationLoop() // starting game animation loop
     },
 
@@ -40,6 +45,10 @@ Game = {
             VAR.lastTime = time;
 
             Game.ctx.clearRect(0, 0, VAR.W, VAR.H);
+
+            for (let o in Game.toDraw){
+                Game.toDraw[o].draw(); // looping through each drawn element to draw each of them
+            }
         }
     }
 }
