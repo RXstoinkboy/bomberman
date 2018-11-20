@@ -81,76 +81,34 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = "./src/js/index.js");
+/******/ 	return __webpack_require__(__webpack_require__.s = "./src/js/VAR.mjs");
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ "./src/js/index.js":
-/*!*************************!*\
-  !*** ./src/js/index.js ***!
-  \*************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ "./src/js/VAR.mjs":
+/*!************************!*\
+  !*** ./src/js/VAR.mjs ***!
+  \************************/
+/*! exports provided: VAR */
+/***/ (function(__webpack_module__, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-
-
-window.addEventListener('load', function () {
-    Game.sprite = new Image(); // creating new imae assigned to Game object
-    Game.sprite.onload = Game.init; // make sure that game is started after source image is loaded
-    Game.sprite.src = '/src/img/bombe.png'; // sprite image source
-});
-
-// basic game window properties used as template to build further functions
-VAR = {
-    fps: 15,
-    W: 0, // game window width
-    H: 0, // game window height
-    scale: 1, // to make sure that game elements are pasted in right scale
-    lastTime: 0,
-    rand: function rand(min, max) {
-        return Math.floor(Math.random() * (max - min + 1)) + min; // random number generator function
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "VAR", function() { return VAR; });
+// variable used to store handy properties used among the way
+const VAR = { 
+    fps: 15, // frames per second for animation
+    H: 0, // window height
+    W: 0, // window width
+    scale: 4, // game elements will be loaded in proper scale
+    lastTime: 0, // property for rAF
+    random: (min, max)=>{ // ranodm number generator
+        return Math.floor(Math.random()* (max-min+1) )+ min;
     }
-
-    // Game is an object created to store all necessary game properties and methods
-};Game = {
-    init: function init() {
-        Game.canvas = document.createElement('canvas'); // setting up canvas
-        Game.ctx = Game.canvas.getContext('2d');
-        Game.layout(); // resizing game window if browser window gets resized
-        window.addEventListener('resize', Game.layout);
-        document.body.appendChild(Game.canvas);
-
-        Game.toDraw = {}; // stores all characters and elements to be drawn during the game
-
-        Game.animationLoop(); // starting game animation loop
-    },
-
-    layout: function layout() {
-        VAR.H = window.innerHeight;
-        VAR.W = window.innerWidth;
-
-        // setting canvas width and height = window dimensions
-        Game.canvas.height = VAR.H;
-        Game.canvas.width = VAR.W;
-    },
-
-    animationLoop: function animationLoop() {
-        requestAnimationFrame(Game.animationLoop);
-        if (time - VAR.lastTime >= 1000 / VAR.fps) {
-            VAR.lastTime = time;
-
-            Game.ctx.clearRect(0, 0, VAR.W, VAR.H);
-
-            for (var o in Game.toDraw) {
-                Game.toDraw[o].draw(); // looping through each drawn element to draw each of them
-            }
-        }
-    }
-};
+}
 
 /***/ })
 
 /******/ });
-//# sourceMappingURL=bundle-index.js.map
+//# sourceMappingURL=bundle-VAR.mjs.map

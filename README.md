@@ -1,1 +1,1 @@
-Bomberman adjusted to ES6
+Bomberman with ES6 features included
