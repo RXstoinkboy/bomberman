@@ -97,6 +97,109 @@ module.exports = {"O_RDONLY":0,"O_WRONLY":1,"O_RDWR":2,"S_IFMT":61440,"S_IFREG":
 
 /***/ }),
 
+/***/ "./src/js/Board.mjs":
+/*!**************************!*\
+  !*** ./src/js/Board.mjs ***!
+  \**************************/
+/*! exports provided: Board */
+/***/ (function(__webpack_module__, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Board", function() { return Board; });
+/* harmony import */ var _VAR_mjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./VAR.mjs */ "./src/js/VAR.mjs");
+/* harmony import */ var _index_mjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./index.mjs */ "./src/js/index.mjs");
+
+
+
+Board.templates = [ // creating board templates here
+    [
+        'WWWWWWWWWWWWWWW',
+        'W             W',
+        'W X X X X X X W',
+        'W             W',
+        'W X X X X X X W',
+        'W             W',
+        'W X X X X X X W',
+        'W             W',
+        'W X X X X X X W',
+        'W             W',
+        'WWWWWWWWWWWWWWW'
+    ],
+    [
+        'WWWWWWWWWWWWWWW',
+        'W             W',
+        'W X XXX XXX X W',
+        'W             W',
+        'W X X X X X X W',
+        'W X         X W',
+        'W X X X X X X W',
+        'W             W',
+        'W XXX X X XXX W',
+        'W             W',
+        'WWWWWWWWWWWWWWW'
+    ]
+]
+
+// define all board elements
+// type: defines what kind of material it is:
+// empty - you can walk on it
+// soft - you can destroy it
+// solid - undestructible
+Board.elements = {
+    'floor': {sx: 174, sy: 16, type: 'empty'},
+    'W': {sx: 190, sy: 16, type: 'solid'}, // outer wall
+    'X': {sx: 206, sy: 16, type: 'solid'}, // inner wall
+    'box': {sx: 126, sy: 16, type: 'soft'},
+}
+function Board(){
+    this.frameWidth = 16;
+    this.frameHeight = 16;
+    this.parse(Board.templates[ _VAR_mjs__WEBPACK_IMPORTED_MODULE_0__["VAR"].random(0, Board.templates.length - 1) ]); // pick rundom board from our templates and convert it into right format
+}
+
+Board.prototype.parse = function(arr){ // convert string board to array of arrays with objects inside
+    
+    this.emptySpaces = []; // array to store all exisiting empty places (grass) on board
+    this.b = [];
+    
+    const newArr = []; // element to store new converted board
+    for (let i = 0 ; i <  arr.length ; i++){ // iterate through each raw of the board
+        this.b.push([]); // create array for each row of the board
+        for (let j = 0 ; j < arr[i].length ; j++){ // iterate through each element (letter) in each row
+            // push corresponding object definition in place of a specific letter key
+            this.b[i].push( Board.elements[arr[i].charAt(j) == ' ' ? 'floor' : arr[i].charAt(j)] ); // pick appropriate obj definition from Board.elements
+        
+            if (this.b[i][j].type === 'empty'){
+                this.emptySpaces.push({ x:j, y:i }); // TOD
+            }
+        }
+    }
+    console.log(this.emptySpaces);
+}
+
+Board.prototype.draw = function(){
+for (let i = 0 ; i < this.b.length; i++){ // iterate through each row
+
+for (let j = 0 ; j < this.b[i].length ; j++){ // iterate through each element in each row
+    _index_mjs__WEBPACK_IMPORTED_MODULE_1__["Game"].ctx.drawImage( // draw method
+        _index_mjs__WEBPACK_IMPORTED_MODULE_1__["Game"].sprite, // image source
+        this.b[i][j].sx, // coords
+        this.b[i][j].sy,
+        this.frameWidth, // size
+        this.frameHeight,
+        j * this.frameWidth * _VAR_mjs__WEBPACK_IMPORTED_MODULE_0__["VAR"].scale, // where to put it on canvas
+        i * this.frameHeight * _VAR_mjs__WEBPACK_IMPORTED_MODULE_0__["VAR"].scale,
+        this.frameWidth * _VAR_mjs__WEBPACK_IMPORTED_MODULE_0__["VAR"].scale, // how big is the drawn image
+        this.frameHeight * _VAR_mjs__WEBPACK_IMPORTED_MODULE_0__["VAR"].scale
+    )    
+    }
+
+}
+}
+
+/***/ }),
+
 /***/ "./src/js/Characters.mjs":
 /*!*******************************!*\
   !*** ./src/js/Characters.mjs ***!
@@ -229,6 +332,15 @@ const VAR = {
     lastTime: 0, // property for rAF
     random: (min, max)=>{ // ranodm number generator
         return Math.floor(Math.random()* (max-min+1) )+ min;
+    },
+    shuffle: (arr) => {
+        let counter = arr.length;
+        let temp;
+        let index;
+        while(counter > 0){
+            counter--;
+            index = Math.floor(Math.random()*counter);
+        }
     }
 }
 
@@ -246,6 +358,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Game", function() { return Game; });
 /* harmony import */ var _Characters_mjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Characters.mjs */ "./src/js/Characters.mjs");
 /* harmony import */ var _VAR_mjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./VAR.mjs */ "./src/js/VAR.mjs");
+/* harmony import */ var _Board_mjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Board.mjs */ "./src/js/Board.mjs");
+
 
 
 
@@ -266,9 +380,11 @@ let Game = {
     
         Game.toDraw = {}; // object to store all characters
     
+        Game.board = new _Board_mjs__WEBPACK_IMPORTED_MODULE_2__["Board"]();
+
         // Game.character = new Hero();
         
-        Game.enemy = new _Characters_mjs__WEBPACK_IMPORTED_MODULE_0__["Enemy"]();
+        // Game.enemy = new Enemy();
 
         Game.animationLoop(); // launch game animation loop
         },
@@ -292,6 +408,9 @@ let Game = {
                 _VAR_mjs__WEBPACK_IMPORTED_MODULE_1__["VAR"].lastTime = time;
 
                 Game.ctx.clearRect(0,0,_VAR_mjs__WEBPACK_IMPORTED_MODULE_1__["VAR"].W, _VAR_mjs__WEBPACK_IMPORTED_MODULE_1__["VAR"].H);
+                
+                Game.board.draw();
+                
                 for(let i in Game.toDraw){        
                         Game.toDraw[i].draw();
                 }

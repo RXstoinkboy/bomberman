@@ -105,6 +105,15 @@ const VAR = {
     lastTime: 0, // property for rAF
     random: (min, max)=>{ // ranodm number generator
         return Math.floor(Math.random()* (max-min+1) )+ min;
+    },
+    shuffle: (arr) => {
+        let counter = arr.length;
+        let temp;
+        let index;
+        while(counter > 0){
+            counter--;
+            index = Math.floor(Math.random()*counter);
+        }
     }
 }
 

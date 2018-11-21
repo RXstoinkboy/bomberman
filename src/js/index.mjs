@@ -1,5 +1,6 @@
 import {Character, Hero, Enemy} from './Characters.mjs';
 import {VAR} from './VAR.mjs';
+import {Board} from './Board.mjs';
 
 document.addEventListener('DOMContentLoaded', function (){ 
     Game.sprite = new Image();
@@ -18,9 +19,11 @@ export let Game = {
     
         Game.toDraw = {}; // object to store all characters
     
+        Game.board = new Board();
+
         // Game.character = new Hero();
         
-        Game.enemy = new Enemy();
+        // Game.enemy = new Enemy();
 
         Game.animationLoop(); // launch game animation loop
         },
@@ -44,6 +47,9 @@ export let Game = {
                 VAR.lastTime = time;
 
                 Game.ctx.clearRect(0,0,VAR.W, VAR.H);
+                
+                Game.board.draw();
+                
                 for(let i in Game.toDraw){        
                         Game.toDraw[i].draw();
                 }
