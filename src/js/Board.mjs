@@ -60,7 +60,7 @@ Board.prototype.parse = function(arr){ // convert string board to array of array
             this.b[i].push( Board.elements[arr[i].charAt(j) == ' ' ? 'floor' : arr[i].charAt(j)] ); // pick appropriate obj definition from Board.elements
         
             if (this.b[i][j].type === 'empty'){
-                this.emptySpaces.push({ x:j, y:i }); // TOD
+                this.emptySpaces.push({ x:j, y:i }); 
             }
         }
     }
