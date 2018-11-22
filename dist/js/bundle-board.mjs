@@ -106,14 +106,18 @@ const VAR = {
     random: (min, max)=>{ // ranodm number generator
         return Math.floor(Math.random()* (max-min+1) )+ min;
     },
-    shuffle: (arr) => {
+    shuffle: function (arr) { // method to shuffle array of emty spaces
         let counter = arr.length;
         let temp;
         let index;
         while(counter > 0){
             counter--;
             index = Math.floor(Math.random()*counter);
+            temp = arr[counter];
+            arr[counter] = arr[index];
+            arr[index] = temp;
         }
+        return arr;
     }
 }
 

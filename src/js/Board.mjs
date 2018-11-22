@@ -39,12 +39,16 @@ Board.elements = {
     'floor': {sx: 174, sy: 16, type: 'empty'},
     'W': {sx: 190, sy: 16, type: 'solid'}, // outer wall
     'X': {sx: 206, sy: 16, type: 'solid'}, // inner wall
-    'box': {sx: 126, sy: 16, type: 'soft'},
+    'box': {sx: 126, sy: 0, type: 'soft'},
 }
 export function Board(){
     this.frameWidth = 16;
     this.frameHeight = 16;
     this.parse(Board.templates[ VAR.random(0, Board.templates.length - 1) ]); // pick rundom board from our templates and convert it into right format
+    // add boxes on the board
+    for( let i = 0 ; i < 20 ; i++){
+        this.addCrate();
+    }
 }
 
 Board.prototype.parse = function(arr){ // convert string board to array of arrays with objects inside
@@ -52,20 +56,30 @@ Board.prototype.parse = function(arr){ // convert string board to array of array
     this.emptySpaces = []; // array to store all exisiting empty places (grass) on board
     this.b = [];
     
-    const newArr = []; // element to store new converted board
     for (let i = 0 ; i <  arr.length ; i++){ // iterate through each raw of the board
         this.b.push([]); // create array for each row of the board
         for (let j = 0 ; j < arr[i].length ; j++){ // iterate through each element (letter) in each row
             // push corresponding object definition in place of a specific letter key
             this.b[i].push( Board.elements[arr[i].charAt(j) == ' ' ? 'floor' : arr[i].charAt(j)] ); // pick appropriate obj definition from Board.elements
-        
-            if (this.b[i][j].type === 'empty'){
+            
+            if (this.b[i][j].type === 'empty' && !(i==1 && j == 1) && !(i==2 && j==1) && !(i==1 && j==2)){
                 this.emptySpaces.push({ x:j, y:i }); 
             }
         }
     }
-    console.log(this.emptySpaces);
-}
+    this.emptySpaces = VAR.shuffle(this.emptySpaces); // shuffle array storing empty spaces
+};
+
+Board.prototype.getEmptySpace = function () { 
+    return this.emptySpaces.length > 0 ? this.emptySpaces.shift() : null;
+};
+
+Board.prototype.addCrate = function () { // adding crate
+    let position = this.getEmptySpace();
+    if(position){
+        this.b[position.y][position.x] = Board.elements.box;
+    }
+};
 
 Board.prototype.draw = function(){
 for (let i = 0 ; i < this.b.length; i++){ // iterate through each row
