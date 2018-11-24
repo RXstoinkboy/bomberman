@@ -13,13 +13,12 @@ export let Game = {
     init: ()=> {
         Game.canvas = document.createElement('canvas'); // create canvas
         Game.ctx = Game.canvas.getContext('2d'); // get canvas 2d context
+        Game.board = new Board();
         Game.layout(); // launch function to resize W and H based on window inner dimensions
         window.addEventListener('resize', Game.layout); // launch layout() function on window resize
         document.body.appendChild(Game.canvas); // append canvas to DOM
     
-        Game.toDraw = {}; // object to store all characters
-    
-        Game.board = new Board();
+        Game.toDraw = {}; // object to store all characters   
 
         // Game.character = new Hero();
         
@@ -31,9 +30,14 @@ export let Game = {
     layout: ()=> {
         VAR.H = window.innerHeight; // get window dimensions dynamically
         VAR.W = window.innerWidth; // as above
-        Game.canvas.height = VAR.H; // set canvas dimensions based on window dimensions
-        Game.canvas.width = VAR.W // as above
-
+        
+        VAR.scale = Math.max(1, Math.min( 
+            Math.floor(VAR.H/(Game.board.frameWidth*Game.board.b[0].length)),
+            Math.floor(VAR.W/(Game.board.frameHeight*Game.board.b.length))
+            ));
+                
+        Game.canvas.width = Math.round(VAR.scale*Game.board.frameWidth*Game.board.b[0].length); // as above
+        Game.canvas.height = Math.round(VAR.scale*Game.board.frameHeight*Game.board.b.length); // set canvas dimensions based on window dimensions
         Game.ctx.imageSmoothingEnabled = false; // character pixels are super sharp
         Game.ctx.mozImageSmoothingEnabled = false;
         Game.ctx.oImageSmoothingEnabled = false;

@@ -392,13 +392,12 @@ let Game = {
     init: ()=> {
         Game.canvas = document.createElement('canvas'); // create canvas
         Game.ctx = Game.canvas.getContext('2d'); // get canvas 2d context
+        Game.board = new _Board_mjs__WEBPACK_IMPORTED_MODULE_2__["Board"]();
         Game.layout(); // launch function to resize W and H based on window inner dimensions
         window.addEventListener('resize', Game.layout); // launch layout() function on window resize
         document.body.appendChild(Game.canvas); // append canvas to DOM
     
-        Game.toDraw = {}; // object to store all characters
-    
-        Game.board = new _Board_mjs__WEBPACK_IMPORTED_MODULE_2__["Board"]();
+        Game.toDraw = {}; // object to store all characters   
 
         // Game.character = new Hero();
         
@@ -410,9 +409,14 @@ let Game = {
     layout: ()=> {
         _VAR_mjs__WEBPACK_IMPORTED_MODULE_1__["VAR"].H = window.innerHeight; // get window dimensions dynamically
         _VAR_mjs__WEBPACK_IMPORTED_MODULE_1__["VAR"].W = window.innerWidth; // as above
-        Game.canvas.height = _VAR_mjs__WEBPACK_IMPORTED_MODULE_1__["VAR"].H; // set canvas dimensions based on window dimensions
-        Game.canvas.width = _VAR_mjs__WEBPACK_IMPORTED_MODULE_1__["VAR"].W // as above
-
+        
+        _VAR_mjs__WEBPACK_IMPORTED_MODULE_1__["VAR"].scale = Math.min( 
+            Math.floor(_VAR_mjs__WEBPACK_IMPORTED_MODULE_1__["VAR"].H/(Game.board.frameWidth*Game.board.b[0].length)),
+            Math.floor(_VAR_mjs__WEBPACK_IMPORTED_MODULE_1__["VAR"].W/(Game.board.frameHeight*Game.board.b.length))
+            )
+                
+            Game.canvas.width = Math.round(_VAR_mjs__WEBPACK_IMPORTED_MODULE_1__["VAR"].scale*Game.board.frameWidth*Game.board.b[0].length); // as above
+                Game.canvas.height = Math.round(_VAR_mjs__WEBPACK_IMPORTED_MODULE_1__["VAR"].scale*Game.board.frameHeight*Game.board.b.length); // set canvas dimensions based on window dimensions
         Game.ctx.imageSmoothingEnabled = false; // character pixels are super sharp
         Game.ctx.mozImageSmoothingEnabled = false;
         Game.ctx.oImageSmoothingEnabled = false;

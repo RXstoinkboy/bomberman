@@ -18,6 +18,7 @@
     },
     "homepage": "https://github.com/RXstoinkboy/bomberman#readme",
     "devDependencies": {
+        "browser-sync": "^2.26.3",
         "webpack": "^4.26.0",
         "webpack-cli": "^3.1.2"
     }
