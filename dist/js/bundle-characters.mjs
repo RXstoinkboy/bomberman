@@ -410,13 +410,16 @@ let Game = {
         _VAR_mjs__WEBPACK_IMPORTED_MODULE_1__["VAR"].H = window.innerHeight; // get window dimensions dynamically
         _VAR_mjs__WEBPACK_IMPORTED_MODULE_1__["VAR"].W = window.innerWidth; // as above
         
-        _VAR_mjs__WEBPACK_IMPORTED_MODULE_1__["VAR"].scale = Math.min( 
+        _VAR_mjs__WEBPACK_IMPORTED_MODULE_1__["VAR"].scale = Math.max(1, Math.min( 
             Math.floor(_VAR_mjs__WEBPACK_IMPORTED_MODULE_1__["VAR"].H/(Game.board.frameWidth*Game.board.b[0].length)),
             Math.floor(_VAR_mjs__WEBPACK_IMPORTED_MODULE_1__["VAR"].W/(Game.board.frameHeight*Game.board.b.length))
-            )
+            ));
                 
-            Game.canvas.width = Math.round(_VAR_mjs__WEBPACK_IMPORTED_MODULE_1__["VAR"].scale*Game.board.frameWidth*Game.board.b[0].length); // as above
-                Game.canvas.height = Math.round(_VAR_mjs__WEBPACK_IMPORTED_MODULE_1__["VAR"].scale*Game.board.frameHeight*Game.board.b.length); // set canvas dimensions based on window dimensions
+        Game.canvas.width = Math.round(_VAR_mjs__WEBPACK_IMPORTED_MODULE_1__["VAR"].scale*Game.board.frameWidth*Game.board.b[0].length); // as above
+        Game.canvas.height = Math.round(_VAR_mjs__WEBPACK_IMPORTED_MODULE_1__["VAR"].scale*Game.board.frameHeight*Game.board.b.length); // set canvas dimensions based on window dimensions
+        
+        Game.canvas.style[Modernizr.prefixed('transform')] = 'translate('+Math.round((_VAR_mjs__WEBPACK_IMPORTED_MODULE_1__["VAR"].W-Game.canvas.width)/2) + 'px,' +Math.round((_VAR_mjs__WEBPACK_IMPORTED_MODULE_1__["VAR"].H-Game.canvas.height)/2)+'px)';
+        
         Game.ctx.imageSmoothingEnabled = false; // character pixels are super sharp
         Game.ctx.mozImageSmoothingEnabled = false;
         Game.ctx.oImageSmoothingEnabled = false;

@@ -38,6 +38,9 @@ export let Game = {
                 
         Game.canvas.width = Math.round(VAR.scale*Game.board.frameWidth*Game.board.b[0].length); // as above
         Game.canvas.height = Math.round(VAR.scale*Game.board.frameHeight*Game.board.b.length); // set canvas dimensions based on window dimensions
+        
+        Game.canvas.style[Modernizr.prefixed('transform')] = 'translate('+Math.round((VAR.W-Game.canvas.width)/2) + 'px,' +Math.round((VAR.H-Game.canvas.height)/2)+'px)';
+        
         Game.ctx.imageSmoothingEnabled = false; // character pixels are super sharp
         Game.ctx.mozImageSmoothingEnabled = false;
         Game.ctx.oImageSmoothingEnabled = false;
