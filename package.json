@@ -1,25 +1,25 @@
 {
-    "name": "bomberman",
-    "version": "0.4.0",
-    "description": "Bomberman with ES6 features included",
-    "main": "index.js",
-    "scripts": {
-        "dev": "webpack --mode development",
-        "prod": "webpack --mode production"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/RXstoinkboy/bomberman.git"
-    },
-    "author": "",
-    "license": "ISC",
-    "bugs": {
-        "url": "https://github.com/RXstoinkboy/bomberman/issues"
-    },
-    "homepage": "https://github.com/RXstoinkboy/bomberman#readme",
-    "devDependencies": {
-        "browser-sync": "^2.26.3",
-        "webpack": "^4.26.0",
-        "webpack-cli": "^3.1.2"
-    }
+  "name": "bomberman",
+  "version": "1.0.0",
+  "description": "Bomberman with ES6 features included",
+  "main": "webpack.config.js",
+  "scripts": {
+    "dev": "webpack --mode development",
+    "prod": "webpack --mode production"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RXstoinkboy/bomberman.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/RXstoinkboy/bomberman/issues"
+  },
+  "homepage": "https://github.com/RXstoinkboy/bomberman#readme",
+  "devDependencies": {
+    "webpack": "^4.26.0",
+    "webpack-cli": "^3.1.2"
+  }
 }

@@ -86,17 +86,6 @@
 /************************************************************************/
 /******/ ({
 
-/***/ "./node_modules/constants-browserify/constants.json":
-/*!**********************************************************!*\
-  !*** ./node_modules/constants-browserify/constants.json ***!
-  \**********************************************************/
-/*! exports provided: O_RDONLY, O_WRONLY, O_RDWR, S_IFMT, S_IFREG, S_IFDIR, S_IFCHR, S_IFBLK, S_IFIFO, S_IFLNK, S_IFSOCK, O_CREAT, O_EXCL, O_NOCTTY, O_TRUNC, O_APPEND, O_DIRECTORY, O_NOFOLLOW, O_SYNC, O_SYMLINK, O_NONBLOCK, S_IRWXU, S_IRUSR, S_IWUSR, S_IXUSR, S_IRWXG, S_IRGRP, S_IWGRP, S_IXGRP, S_IRWXO, S_IROTH, S_IWOTH, S_IXOTH, E2BIG, EACCES, EADDRINUSE, EADDRNOTAVAIL, EAFNOSUPPORT, EAGAIN, EALREADY, EBADF, EBADMSG, EBUSY, ECANCELED, ECHILD, ECONNABORTED, ECONNREFUSED, ECONNRESET, EDEADLK, EDESTADDRREQ, EDOM, EDQUOT, EEXIST, EFAULT, EFBIG, EHOSTUNREACH, EIDRM, EILSEQ, EINPROGRESS, EINTR, EINVAL, EIO, EISCONN, EISDIR, ELOOP, EMFILE, EMLINK, EMSGSIZE, EMULTIHOP, ENAMETOOLONG, ENETDOWN, ENETRESET, ENETUNREACH, ENFILE, ENOBUFS, ENODATA, ENODEV, ENOENT, ENOEXEC, ENOLCK, ENOLINK, ENOMEM, ENOMSG, ENOPROTOOPT, ENOSPC, ENOSR, ENOSTR, ENOSYS, ENOTCONN, ENOTDIR, ENOTEMPTY, ENOTSOCK, ENOTSUP, ENOTTY, ENXIO, EOPNOTSUPP, EOVERFLOW, EPERM, EPIPE, EPROTO, EPROTONOSUPPORT, EPROTOTYPE, ERANGE, EROFS, ESPIPE, ESRCH, ESTALE, ETIME, ETIMEDOUT, ETXTBSY, EWOULDBLOCK, EXDEV, SIGHUP, SIGINT, SIGQUIT, SIGILL, SIGTRAP, SIGABRT, SIGIOT, SIGBUS, SIGFPE, SIGKILL, SIGUSR1, SIGSEGV, SIGUSR2, SIGPIPE, SIGALRM, SIGTERM, SIGCHLD, SIGCONT, SIGSTOP, SIGTSTP, SIGTTIN, SIGTTOU, SIGURG, SIGXCPU, SIGXFSZ, SIGVTALRM, SIGPROF, SIGWINCH, SIGIO, SIGSYS, SSL_OP_ALL, SSL_OP_ALLOW_UNSAFE_LEGACY_RENEGOTIATION, SSL_OP_CIPHER_SERVER_PREFERENCE, SSL_OP_CISCO_ANYCONNECT, SSL_OP_COOKIE_EXCHANGE, SSL_OP_CRYPTOPRO_TLSEXT_BUG, SSL_OP_DONT_INSERT_EMPTY_FRAGMENTS, SSL_OP_EPHEMERAL_RSA, SSL_OP_LEGACY_SERVER_CONNECT, SSL_OP_MICROSOFT_BIG_SSLV3_BUFFER, SSL_OP_MICROSOFT_SESS_ID_BUG, SSL_OP_MSIE_SSLV2_RSA_PADDING, SSL_OP_NETSCAPE_CA_DN_BUG, SSL_OP_NETSCAPE_CHALLENGE_BUG, SSL_OP_NETSCAPE_DEMO_CIPHER_CHANGE_BUG, SSL_OP_NETSCAPE_REUSE_CIPHER_CHANGE_BUG, SSL_OP_NO_COMPRESSION, SSL_OP_NO_QUERY_MTU, SSL_OP_NO_SESSION_RESUMPTION_ON_RENEGOTIATION, SSL_OP_NO_SSLv2, SSL_OP_NO_SSLv3, SSL_OP_NO_TICKET, SSL_OP_NO_TLSv1, SSL_OP_NO_TLSv1_1, SSL_OP_NO_TLSv1_2, SSL_OP_PKCS1_CHECK_1, SSL_OP_PKCS1_CHECK_2, SSL_OP_SINGLE_DH_USE, SSL_OP_SINGLE_ECDH_USE, SSL_OP_SSLEAY_080_CLIENT_DH_BUG, SSL_OP_SSLREF2_REUSE_CERT_TYPE_BUG, SSL_OP_TLS_BLOCK_PADDING_BUG, SSL_OP_TLS_D5_BUG, SSL_OP_TLS_ROLLBACK_BUG, ENGINE_METHOD_DSA, ENGINE_METHOD_DH, ENGINE_METHOD_RAND, ENGINE_METHOD_ECDH, ENGINE_METHOD_ECDSA, ENGINE_METHOD_CIPHERS, ENGINE_METHOD_DIGESTS, ENGINE_METHOD_STORE, ENGINE_METHOD_PKEY_METHS, ENGINE_METHOD_PKEY_ASN1_METHS, ENGINE_METHOD_ALL, ENGINE_METHOD_NONE, DH_CHECK_P_NOT_SAFE_PRIME, DH_CHECK_P_NOT_PRIME, DH_UNABLE_TO_CHECK_GENERATOR, DH_NOT_SUITABLE_GENERATOR, NPN_ENABLED, RSA_PKCS1_PADDING, RSA_SSLV23_PADDING, RSA_NO_PADDING, RSA_PKCS1_OAEP_PADDING, RSA_X931_PADDING, RSA_PKCS1_PSS_PADDING, POINT_CONVERSION_COMPRESSED, POINT_CONVERSION_UNCOMPRESSED, POINT_CONVERSION_HYBRID, F_OK, R_OK, W_OK, X_OK, UV_UDP_REUSEADDR, default */
-/***/ (function(module) {
-
-module.exports = {"O_RDONLY":0,"O_WRONLY":1,"O_RDWR":2,"S_IFMT":61440,"S_IFREG":32768,"S_IFDIR":16384,"S_IFCHR":8192,"S_IFBLK":24576,"S_IFIFO":4096,"S_IFLNK":40960,"S_IFSOCK":49152,"O_CREAT":512,"O_EXCL":2048,"O_NOCTTY":131072,"O_TRUNC":1024,"O_APPEND":8,"O_DIRECTORY":1048576,"O_NOFOLLOW":256,"O_SYNC":128,"O_SYMLINK":2097152,"O_NONBLOCK":4,"S_IRWXU":448,"S_IRUSR":256,"S_IWUSR":128,"S_IXUSR":64,"S_IRWXG":56,"S_IRGRP":32,"S_IWGRP":16,"S_IXGRP":8,"S_IRWXO":7,"S_IROTH":4,"S_IWOTH":2,"S_IXOTH":1,"E2BIG":7,"EACCES":13,"EADDRINUSE":48,"EADDRNOTAVAIL":49,"EAFNOSUPPORT":47,"EAGAIN":35,"EALREADY":37,"EBADF":9,"EBADMSG":94,"EBUSY":16,"ECANCELED":89,"ECHILD":10,"ECONNABORTED":53,"ECONNREFUSED":61,"ECONNRESET":54,"EDEADLK":11,"EDESTADDRREQ":39,"EDOM":33,"EDQUOT":69,"EEXIST":17,"EFAULT":14,"EFBIG":27,"EHOSTUNREACH":65,"EIDRM":90,"EILSEQ":92,"EINPROGRESS":36,"EINTR":4,"EINVAL":22,"EIO":5,"EISCONN":56,"EISDIR":21,"ELOOP":62,"EMFILE":24,"EMLINK":31,"EMSGSIZE":40,"EMULTIHOP":95,"ENAMETOOLONG":63,"ENETDOWN":50,"ENETRESET":52,"ENETUNREACH":51,"ENFILE":23,"ENOBUFS":55,"ENODATA":96,"ENODEV":19,"ENOENT":2,"ENOEXEC":8,"ENOLCK":77,"ENOLINK":97,"ENOMEM":12,"ENOMSG":91,"ENOPROTOOPT":42,"ENOSPC":28,"ENOSR":98,"ENOSTR":99,"ENOSYS":78,"ENOTCONN":57,"ENOTDIR":20,"ENOTEMPTY":66,"ENOTSOCK":38,"ENOTSUP":45,"ENOTTY":25,"ENXIO":6,"EOPNOTSUPP":102,"EOVERFLOW":84,"EPERM":1,"EPIPE":32,"EPROTO":100,"EPROTONOSUPPORT":43,"EPROTOTYPE":41,"ERANGE":34,"EROFS":30,"ESPIPE":29,"ESRCH":3,"ESTALE":70,"ETIME":101,"ETIMEDOUT":60,"ETXTBSY":26,"EWOULDBLOCK":35,"EXDEV":18,"SIGHUP":1,"SIGINT":2,"SIGQUIT":3,"SIGILL":4,"SIGTRAP":5,"SIGABRT":6,"SIGIOT":6,"SIGBUS":10,"SIGFPE":8,"SIGKILL":9,"SIGUSR1":30,"SIGSEGV":11,"SIGUSR2":31,"SIGPIPE":13,"SIGALRM":14,"SIGTERM":15,"SIGCHLD":20,"SIGCONT":19,"SIGSTOP":17,"SIGTSTP":18,"SIGTTIN":21,"SIGTTOU":22,"SIGURG":16,"SIGXCPU":24,"SIGXFSZ":25,"SIGVTALRM":26,"SIGPROF":27,"SIGWINCH":28,"SIGIO":23,"SIGSYS":12,"SSL_OP_ALL":2147486719,"SSL_OP_ALLOW_UNSAFE_LEGACY_RENEGOTIATION":262144,"SSL_OP_CIPHER_SERVER_PREFERENCE":4194304,"SSL_OP_CISCO_ANYCONNECT":32768,"SSL_OP_COOKIE_EXCHANGE":8192,"SSL_OP_CRYPTOPRO_TLSEXT_BUG":2147483648,"SSL_OP_DONT_INSERT_EMPTY_FRAGMENTS":2048,"SSL_OP_EPHEMERAL_RSA":0,"SSL_OP_LEGACY_SERVER_CONNECT":4,"SSL_OP_MICROSOFT_BIG_SSLV3_BUFFER":32,"SSL_OP_MICROSOFT_SESS_ID_BUG":1,"SSL_OP_MSIE_SSLV2_RSA_PADDING":0,"SSL_OP_NETSCAPE_CA_DN_BUG":536870912,"SSL_OP_NETSCAPE_CHALLENGE_BUG":2,"SSL_OP_NETSCAPE_DEMO_CIPHER_CHANGE_BUG":1073741824,"SSL_OP_NETSCAPE_REUSE_CIPHER_CHANGE_BUG":8,"SSL_OP_NO_COMPRESSION":131072,"SSL_OP_NO_QUERY_MTU":4096,"SSL_OP_NO_SESSION_RESUMPTION_ON_RENEGOTIATION":65536,"SSL_OP_NO_SSLv2":16777216,"SSL_OP_NO_SSLv3":33554432,"SSL_OP_NO_TICKET":16384,"SSL_OP_NO_TLSv1":67108864,"SSL_OP_NO_TLSv1_1":268435456,"SSL_OP_NO_TLSv1_2":134217728,"SSL_OP_PKCS1_CHECK_1":0,"SSL_OP_PKCS1_CHECK_2":0,"SSL_OP_SINGLE_DH_USE":1048576,"SSL_OP_SINGLE_ECDH_USE":524288,"SSL_OP_SSLEAY_080_CLIENT_DH_BUG":128,"SSL_OP_SSLREF2_REUSE_CERT_TYPE_BUG":0,"SSL_OP_TLS_BLOCK_PADDING_BUG":512,"SSL_OP_TLS_D5_BUG":256,"SSL_OP_TLS_ROLLBACK_BUG":8388608,"ENGINE_METHOD_DSA":2,"ENGINE_METHOD_DH":4,"ENGINE_METHOD_RAND":8,"ENGINE_METHOD_ECDH":16,"ENGINE_METHOD_ECDSA":32,"ENGINE_METHOD_CIPHERS":64,"ENGINE_METHOD_DIGESTS":128,"ENGINE_METHOD_STORE":256,"ENGINE_METHOD_PKEY_METHS":512,"ENGINE_METHOD_PKEY_ASN1_METHS":1024,"ENGINE_METHOD_ALL":65535,"ENGINE_METHOD_NONE":0,"DH_CHECK_P_NOT_SAFE_PRIME":2,"DH_CHECK_P_NOT_PRIME":1,"DH_UNABLE_TO_CHECK_GENERATOR":4,"DH_NOT_SUITABLE_GENERATOR":8,"NPN_ENABLED":1,"RSA_PKCS1_PADDING":1,"RSA_SSLV23_PADDING":2,"RSA_NO_PADDING":3,"RSA_PKCS1_OAEP_PADDING":4,"RSA_X931_PADDING":5,"RSA_PKCS1_PSS_PADDING":6,"POINT_CONVERSION_COMPRESSED":2,"POINT_CONVERSION_UNCOMPRESSED":4,"POINT_CONVERSION_HYBRID":6,"F_OK":0,"R_OK":4,"W_OK":2,"X_OK":1,"UV_UDP_REUSEADDR":4};
-
-/***/ }),
-
 /***/ "./src/js/Board.mjs":
 /*!**************************!*\
   !*** ./src/js/Board.mjs ***!
@@ -228,9 +217,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Enemy", function() { return Enemy; });
 /* harmony import */ var _index_mjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./index.mjs */ "./src/js/index.mjs");
 /* harmony import */ var _VAR_mjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./VAR.mjs */ "./src/js/VAR.mjs");
-/* harmony import */ var constants__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! constants */ "./node_modules/constants-browserify/constants.json");
-var constants__WEBPACK_IMPORTED_MODULE_2___namespace = /*#__PURE__*/__webpack_require__.t(/*! constants */ "./node_modules/constants-browserify/constants.json", 1);
-
 
 
 
@@ -247,10 +233,10 @@ function Character(inheritance){
     this.frameWidth = 21; // width of a sprite
     this.frameHeight = 24; // height of a sprite
 
-    // this.startX = 0; // base sprite coords
-    // this.startY = 0;
+    this.modX = -2;
+    this.modY = -8;
 
-    // this.frames = [1,0,2,0]; // frames to specify which sprite should be used to animate character
+    this.speed = 2;
 
     this.currentFrame = 0; // current frame of animation
 
@@ -259,7 +245,18 @@ function Character(inheritance){
 }
 
 Character.prototype.draw = function (){ // draw method prototype
-if(this.states[this.state].flip){ // inverse image if 'flip' property is true
+    // char speed depending on his state
+    if (this.state == 'down_go'){
+        this.y += this.speed;
+    } else if (this.state == 'right_go'){
+        this.x += this.speed;
+    }else if (this.state == 'up_go'){
+        this.y -= this.speed;
+    }else if (this.state == 'left_go'){
+        this.x -= this.speed;
+    };
+
+    if(this.states[this.state].flip){ // inverse image if 'flip' property is true
     _index_mjs__WEBPACK_IMPORTED_MODULE_0__["Game"].ctx.save(); // saving a given canvas state
     _index_mjs__WEBPACK_IMPORTED_MODULE_0__["Game"].ctx.scale(-1,1); // inversing canvas
 }
@@ -270,8 +267,8 @@ if(this.states[this.state].flip){ // inverse image if 'flip' property is true
         this.states[this.state].sy,
         this.frameWidth,
         this.frameHeight,
-        this.states[this.state].flip ? -this.frameWidth*_VAR_mjs__WEBPACK_IMPORTED_MODULE_1__["VAR"].scale : 0,
-        0,
+        this.states[this.state].flip ? (-this.frameWidth - this.modX - this.x )*_VAR_mjs__WEBPACK_IMPORTED_MODULE_1__["VAR"].scale : (this.x + this.modX)*_VAR_mjs__WEBPACK_IMPORTED_MODULE_1__["VAR"].scale,
+        (this.y+this.modY)*_VAR_mjs__WEBPACK_IMPORTED_MODULE_1__["VAR"].scale,
         this.frameWidth*_VAR_mjs__WEBPACK_IMPORTED_MODULE_1__["VAR"].scale,
         this.frameHeight*_VAR_mjs__WEBPACK_IMPORTED_MODULE_1__["VAR"].scale
     );
@@ -289,7 +286,7 @@ if(this.states[this.state].flip){ // inverse image if 'flip' property is true
 
 function Hero(){ // deifing main hero
     Character.call(this); // extending Character class
-    this.state = 'down_go'; // current animation state of Hero
+    this.state = 'down'; // current animation state of Hero
     this.states = { // definig all possible animation states of Hero
         'down': {sx:0, sy:0, f:[0]},
         'down_go': {sx:0, sy:0, f:[1,0,2,0]},
@@ -300,11 +297,33 @@ function Hero(){ // deifing main hero
         'right': {sx:63, sy:0, f:[0], flip: true}, // flip set up to inverse character graphics
         'right_go': {sx:63, sy:0, f:[1,0,2,0], flip: true},
         'ko': {sx: 0, sy: 48, f:[0,1,0,1,0,1,2,3,4]} // death animation
-    }
+    };
+    this.x = _index_mjs__WEBPACK_IMPORTED_MODULE_0__["Game"].board.frameWidth;
+    this.y = _index_mjs__WEBPACK_IMPORTED_MODULE_0__["Game"].board.frameHeight;
 }
 
 Hero.prototype = new Character(true); // extending Character draw method to Hero constructor
 Hero.prototype.constructor = Hero;
+
+Hero.prototype.updateState = function(){
+    this.tempState = null; // temporary state variable
+    if (_index_mjs__WEBPACK_IMPORTED_MODULE_0__["Game"].key_37){ // when arrow left is pressed then change temporary state to left_go
+        this.tempState = 'left_go';
+    } else if (_index_mjs__WEBPACK_IMPORTED_MODULE_0__["Game"].key_38){ // when arrow left is pressed then change temporary state to left_go
+        this.tempState = 'up_go';
+    }else if (_index_mjs__WEBPACK_IMPORTED_MODULE_0__["Game"].key_39){ // when arrow left is pressed then change temporary state to left_go
+        this.tempState = 'right_go';
+    }else if (_index_mjs__WEBPACK_IMPORTED_MODULE_0__["Game"].key_40){ // when arrow left is pressed then change temporary state to left_go
+        this.tempState = 'down_go';
+    }else if (this.state.slice(-2) == 'go'){ // check if current active state was with 'go' ending
+    console.log('puszczam');    
+    this.tempState = this.state.slice(0,this.state.indexOf('_go')); // slice last 3 digits to be left with static state
+    }
+    if (this.tempState!= this.state){ // check if state has changed
+        this.currentFrame = 0;
+        this.state = this.tempState; // reasign state to temporary state
+    }
+}
 
 function Enemy(){
     Character.call(this);
@@ -399,12 +418,37 @@ let Game = {
     
         Game.toDraw = {}; // object to store all characters   
 
-        // Game.character = new Hero();
+        Game.hero = new _Characters_mjs__WEBPACK_IMPORTED_MODULE_0__["Hero"]();
+
+        // add event listeners for char sterring
         
+        window.addEventListener('keydown', Game.onKey);
+        window.addEventListener('keyup', Game.onKey);
+
         // Game.enemy = new Enemy();
 
         Game.animationLoop(); // launch game animation loop
         },
+
+    onKey: (e)=>{
+        if (e.keyCode >= 37 && e.keyCode<= 40 || e.keyCode == 32){ // use only arrows and space in game
+            e.preventDefault(); // turn off standard key actions
+            if(e.type == 'keydown' && !Game[`key_${e.keyCode}`]){ // when key has been pressed
+                Game[`key_${e.keyCode}`] = true; // set key to work
+                if(e.keyCode >= 37 && e.keyCode <= 40 ){ // if any arrow was pressed then make sure to disable previously pressed arrow
+                    for (let i = 37; i <= 40 ; i++){
+                        if(i!= e.keyCode){
+                            Game[`key_${i}`] = false;
+                        }
+                    }
+                }
+                Game.hero.updateState(); // launch update function when key is pressed (conditions above)
+            } else if (e.type == 'keyup'){ // update state when key is released as well (char is standing)
+                Game[`key_${e.keyCode}`] = false;
+                Game.hero.updateState();
+            }
+        }
+    },
 
     layout: ()=> {
         _VAR_mjs__WEBPACK_IMPORTED_MODULE_1__["VAR"].H = window.innerHeight; // get window dimensions dynamically
@@ -418,8 +462,9 @@ let Game = {
         Game.canvas.width = Math.round(_VAR_mjs__WEBPACK_IMPORTED_MODULE_1__["VAR"].scale*Game.board.frameWidth*Game.board.b[0].length); // as above
         Game.canvas.height = Math.round(_VAR_mjs__WEBPACK_IMPORTED_MODULE_1__["VAR"].scale*Game.board.frameHeight*Game.board.b.length); // set canvas dimensions based on window dimensions
         
-        Game.canvas.style[Modernizr.prefixed('transform')] = 'translate('+Math.round((_VAR_mjs__WEBPACK_IMPORTED_MODULE_1__["VAR"].W-Game.canvas.width)/2) + 'px,' +Math.round((_VAR_mjs__WEBPACK_IMPORTED_MODULE_1__["VAR"].H-Game.canvas.height)/2)+'px)';
+        Game.canvas.style[Modernizr.prefixed('transform')] = `translate(${Math.round( (_VAR_mjs__WEBPACK_IMPORTED_MODULE_1__["VAR"].W-Game.canvas.width)/2 )}px, ${Math.round( (_VAR_mjs__WEBPACK_IMPORTED_MODULE_1__["VAR"].H-Game.canvas.height)/2 ) }px)`;
         
+//'translate('+Math.round((VAR.W-Game.canvas.width)/2) + 'px,' +Math.round((VAR.H-Game.canvas.height)/2)+'px)';
         Game.ctx.imageSmoothingEnabled = false; // character pixels are super sharp
         Game.ctx.mozImageSmoothingEnabled = false;
         Game.ctx.oImageSmoothingEnabled = false;
@@ -442,10 +487,6 @@ let Game = {
             }
         }
 }
-
-
-
-
 
 /***/ })
 

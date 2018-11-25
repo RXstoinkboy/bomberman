@@ -20,12 +20,37 @@ export let Game = {
     
         Game.toDraw = {}; // object to store all characters   
 
-        // Game.character = new Hero();
+        Game.hero = new Hero();
+
+        // add event listeners for char sterring
         
+        window.addEventListener('keydown', Game.onKey);
+        window.addEventListener('keyup', Game.onKey);
+
         // Game.enemy = new Enemy();
 
         Game.animationLoop(); // launch game animation loop
         },
+
+    onKey: (e)=>{
+        if (e.keyCode >= 37 && e.keyCode<= 40 || e.keyCode == 32){ // use only arrows and space in game
+            e.preventDefault(); // turn off standard key actions
+            if(e.type == 'keydown' && !Game[`key_${e.keyCode}`]){ // when key has been pressed
+                Game[`key_${e.keyCode}`] = true; // set key to work
+                if(e.keyCode >= 37 && e.keyCode <= 40 ){ // if any arrow was pressed then make sure to disable previously pressed arrow
+                    for (let i = 37; i <= 40 ; i++){
+                        if(i!= e.keyCode){
+                            Game[`key_${i}`] = false;
+                        }
+                    }
+                }
+                Game.hero.updateState(); // launch update function when key is pressed (conditions above)
+            } else if (e.type == 'keyup'){ // update state when key is released as well (char is standing)
+                Game[`key_${e.keyCode}`] = false;
+                Game.hero.updateState();
+            }
+        }
+    },
 
     layout: ()=> {
         VAR.H = window.innerHeight; // get window dimensions dynamically
@@ -39,8 +64,9 @@ export let Game = {
         Game.canvas.width = Math.round(VAR.scale*Game.board.frameWidth*Game.board.b[0].length); // as above
         Game.canvas.height = Math.round(VAR.scale*Game.board.frameHeight*Game.board.b.length); // set canvas dimensions based on window dimensions
         
-        Game.canvas.style[Modernizr.prefixed('transform')] = 'translate('+Math.round((VAR.W-Game.canvas.width)/2) + 'px,' +Math.round((VAR.H-Game.canvas.height)/2)+'px)';
+        Game.canvas.style[Modernizr.prefixed('transform')] = `translate(${Math.round( (VAR.W-Game.canvas.width)/2 )}px, ${Math.round( (VAR.H-Game.canvas.height)/2 ) }px)`;
         
+//'translate('+Math.round((VAR.W-Game.canvas.width)/2) + 'px,' +Math.round((VAR.H-Game.canvas.height)/2)+'px)';
         Game.ctx.imageSmoothingEnabled = false; // character pixels are super sharp
         Game.ctx.mozImageSmoothingEnabled = false;
         Game.ctx.oImageSmoothingEnabled = false;
@@ -63,6 +89,3 @@ export let Game = {
             }
         }
 }
-
-
-
