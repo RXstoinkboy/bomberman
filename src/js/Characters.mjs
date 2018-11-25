@@ -25,22 +25,77 @@ export function Character(inheritance){
     this.currentFrameDelay = 0;
 }
 
+// adding collision detection for Character
+Character.prototype.rowAndColumn = function(){
+    // compute in which row and in which column character is located
+    this.row = Math.round(this.y/Game.board.frameHeight);
+    this.column = Math.round(this.x/Game.board.frameWidth);
+    if(this.state.slice(-2) == 'go'){ // determine on which board element char is
+        if (this.state == 'left_go' || this.state == 'right_go'){
+            this.nextRow = this.row;
+            this.nextColumn = this.state == 'left_go' ? Math.floor(this.x/Game.board.frameWidth) : Math.ceil(this.x/Game.board.frameWidth); // round down if movement to left and round up when char moving right
+        } else {
+            this.nextColumn = this.column;
+            this.nextRow = this.state == 'up_go' ? Math.floor(this.y/Game.board.frameHeight) : Math.ceil(this.y/Game.board.frameHeight);
+        }
+        // check if current column and row changes or not && check if next place is empty or not
+        if( !(this.row == this.nextRow && this.column == this.nextColumn) && Game.board.b[this.nextRow][this.nextColumn].type != 'empty' ){
+            this.state = this.state.slice(0,-3);
+            this.currentFrame = 0;
+            // when char hits an obstacle we want to put him on the center of the area
+            if (this.row!=this.nextRow){
+                this.y = this.row*Game.board.frameHeight;
+            } else {
+                this.x = this.column*Game.board.frameWidth;
+            }
+        } else { // situation when character can walk on certain area - let's center him!
+            if (this.row!=this.nextRow){ // both ifs are making sure that character is walking in the 'tunnel'
+                this.x = this.column*Game.board.frameWidth;
+            } else if (this.column!=this.nextColumn){
+                this.y = this.row*Game.board.frameHeight;
+            }
+        }
+    } else { // if char not moving then don't reasign row and col position
+        this.nextRow = this.row;
+        this.nextColumn = this.columnl
+    }
+}
+
 Character.prototype.draw = function (){ // draw method prototype
-    // char speed depending on his state
-    if (this.state == 'down_go'){
-        this.y += this.speed;
-    } else if (this.state == 'right_go'){
-        this.x += this.speed;
-    }else if (this.state == 'up_go'){
-        this.y -= this.speed;
-    }else if (this.state == 'left_go'){
-        this.x -= this.speed;
-    };
+    if(this.state.slice(-2) == 'go'){    
+        // char speed depending on his state
+        if (this.state == 'down_go'){
+            this.y += this.speed;
+        } else if (this.state == 'right_go'){
+            this.x += this.speed;
+        }else if (this.state == 'up_go'){
+            this.y -= this.speed;
+        }else if (this.state == 'left_go'){
+            this.x -= this.speed;
+        }
+        this.rowAndColumn();
+    }
+
+    
+
+    Game.ctx.fillRect(
+        this.column*Game.board.frameWidth*VAR.scale,
+        this.row*Game.board.frameHeight*VAR.scale,
+        Game.board.frameWidth*VAR.scale,
+        Game.board.frameHeight*VAR.scale
+        );
+
+        Game.ctx.fillRect(
+            this.nextColumn*Game.board.frameWidth*VAR.scale,
+            this.nextRow*Game.board.frameHeight*VAR.scale,
+            Game.board.frameWidth*VAR.scale,
+            Game.board.frameHeight*VAR.scale
+            );
 
     if(this.states[this.state].flip){ // inverse image if 'flip' property is true
     Game.ctx.save(); // saving a given canvas state
     Game.ctx.scale(-1,1); // inversing canvas
-}
+    }
 
     Game.ctx.drawImage( // definig what part of image should be clipped
         Game.sprite,
@@ -87,7 +142,7 @@ Hero.prototype = new Character(true); // extending Character draw method to Hero
 Hero.prototype.constructor = Hero;
 
 Hero.prototype.updateState = function(){
-    this.tempState = null; // temporary state variable
+    this.tempState = this.state; // temporary state variable
     if (Game.key_37){ // when arrow left is pressed then change temporary state to left_go
         this.tempState = 'left_go';
     } else if (Game.key_38){ // when arrow left is pressed then change temporary state to left_go
@@ -97,7 +152,6 @@ Hero.prototype.updateState = function(){
     }else if (Game.key_40){ // when arrow left is pressed then change temporary state to left_go
         this.tempState = 'down_go';
     }else if (this.state.slice(-2) == 'go'){ // check if current active state was with 'go' ending
-    console.log('puszczam');    
     this.tempState = this.state.slice(0,this.state.indexOf('_go')); // slice last 3 digits to be left with static state
     }
     if (this.tempState!= this.state){ // check if state has changed
