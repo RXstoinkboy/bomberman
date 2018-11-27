@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function (){
 
 // object containg basic game properties
 export let Game = {
-    init: ()=> {
+    init: function() {
         Game.canvas = document.createElement('canvas'); // create canvas
         Game.ctx = Game.canvas.getContext('2d'); // get canvas 2d context
         Game.board = new Board();
@@ -22,12 +22,21 @@ export let Game = {
 
         Game.hero = new Hero();
 
+        let tempEmpty;
+        // create 5 enemies in random places
+        for (let i = 0 ; i < 5 ; i++){
+            
+            tempEmpty = Game.board.getEmptySpace();
+            new Enemy(tempEmpty.x*Game.board.frameWidth, tempEmpty.y*Game.board.frameHeight);
+
+        }
+
         // add event listeners for char sterring
         
         window.addEventListener('keydown', Game.onKey);
         window.addEventListener('keyup', Game.onKey);
 
-        // Game.enemy = new Enemy();
+        
 
         Game.animationLoop(); // launch game animation loop
         },

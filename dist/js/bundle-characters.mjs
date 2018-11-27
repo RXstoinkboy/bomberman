@@ -244,72 +244,36 @@ function Character(inheritance){
     this.currentFrameDelay = 0;
 }
 
-// adding collision detection for Character
-Character.prototype.rowAndColumn = function(){
-    // compute in which row and in which column character is located
-    this.row = Math.round(this.y/_index_mjs__WEBPACK_IMPORTED_MODULE_0__["Game"].board.frameHeight);
-    this.column = Math.round(this.x/_index_mjs__WEBPACK_IMPORTED_MODULE_0__["Game"].board.frameWidth);
-    if(this.state.slice(-2) == 'go'){ // determine on which board element char is
-        if (this.state == 'left_go' || this.state == 'right_go'){
-            this.nextRow = this.row;
-            this.nextColumn = this.state == 'left_go' ? Math.floor(this.x/_index_mjs__WEBPACK_IMPORTED_MODULE_0__["Game"].board.frameWidth) : Math.ceil(this.x/_index_mjs__WEBPACK_IMPORTED_MODULE_0__["Game"].board.frameWidth); // round down if movement to left and round up when char moving right
-        } else {
-            this.nextColumn = this.column;
-            this.nextRow = this.state == 'up_go' ? Math.floor(this.y/_index_mjs__WEBPACK_IMPORTED_MODULE_0__["Game"].board.frameHeight) : Math.ceil(this.y/_index_mjs__WEBPACK_IMPORTED_MODULE_0__["Game"].board.frameHeight);
-        }
-        // check if current column and row changes or not && check if next place is empty or not
-        if( !(this.row == this.nextRow && this.column == this.nextColumn) && _index_mjs__WEBPACK_IMPORTED_MODULE_0__["Game"].board.b[this.nextRow][this.nextColumn].type != 'empty' ){
-            this.state = this.state.slice(0,-3);
-            this.currentFrame = 0;
-            // when char hits an obstacle we want to put him on the center of the area
-            if (this.row!=this.nextRow){
-                this.y = this.row*_index_mjs__WEBPACK_IMPORTED_MODULE_0__["Game"].board.frameHeight;
-            } else {
-                this.x = this.column*_index_mjs__WEBPACK_IMPORTED_MODULE_0__["Game"].board.frameWidth;
-            }
-        } else { // situation when character can walk on certain area - let's center him!
-            if (this.row!=this.nextRow){ // both ifs are making sure that character is walking in the 'tunnel'
-                this.x = this.column*_index_mjs__WEBPACK_IMPORTED_MODULE_0__["Game"].board.frameWidth;
-            } else if (this.column!=this.nextColumn){
-                this.y = this.row*_index_mjs__WEBPACK_IMPORTED_MODULE_0__["Game"].board.frameHeight;
-            }
-        }
-    } else { // if char not moving then don't reasign row and col position
-        this.nextRow = this.row;
-        this.nextColumn = this.columnl
-    }
-}
-
 Character.prototype.draw = function (){ // draw method prototype
     if(this.state.slice(-2) == 'go'){    
         // char speed depending on his state
         if (this.state == 'down_go'){
             this.y += this.speed;
-        } else if (this.state == 'right_go'){
+        }else if (this.state == 'right_go'){
             this.x += this.speed;
         }else if (this.state == 'up_go'){
             this.y -= this.speed;
         }else if (this.state == 'left_go'){
             this.x -= this.speed;
         }
+        
         this.rowAndColumn();
-    }
+        
+    } 
 
-    
+    // Game.ctx.fillRect(
+    //     this.column*Game.board.frameWidth*VAR.scale,
+    //     this.row*Game.board.frameHeight*VAR.scale,
+    //     Game.board.frameWidth*VAR.scale,
+    //     Game.board.frameHeight*VAR.scale
+    //     );
 
-    _index_mjs__WEBPACK_IMPORTED_MODULE_0__["Game"].ctx.fillRect(
-        this.column*_index_mjs__WEBPACK_IMPORTED_MODULE_0__["Game"].board.frameWidth*_VAR_mjs__WEBPACK_IMPORTED_MODULE_1__["VAR"].scale,
-        this.row*_index_mjs__WEBPACK_IMPORTED_MODULE_0__["Game"].board.frameHeight*_VAR_mjs__WEBPACK_IMPORTED_MODULE_1__["VAR"].scale,
-        _index_mjs__WEBPACK_IMPORTED_MODULE_0__["Game"].board.frameWidth*_VAR_mjs__WEBPACK_IMPORTED_MODULE_1__["VAR"].scale,
-        _index_mjs__WEBPACK_IMPORTED_MODULE_0__["Game"].board.frameHeight*_VAR_mjs__WEBPACK_IMPORTED_MODULE_1__["VAR"].scale
-        );
-
-        _index_mjs__WEBPACK_IMPORTED_MODULE_0__["Game"].ctx.fillRect(
-            this.nextColumn*_index_mjs__WEBPACK_IMPORTED_MODULE_0__["Game"].board.frameWidth*_VAR_mjs__WEBPACK_IMPORTED_MODULE_1__["VAR"].scale,
-            this.nextRow*_index_mjs__WEBPACK_IMPORTED_MODULE_0__["Game"].board.frameHeight*_VAR_mjs__WEBPACK_IMPORTED_MODULE_1__["VAR"].scale,
-            _index_mjs__WEBPACK_IMPORTED_MODULE_0__["Game"].board.frameWidth*_VAR_mjs__WEBPACK_IMPORTED_MODULE_1__["VAR"].scale,
-            _index_mjs__WEBPACK_IMPORTED_MODULE_0__["Game"].board.frameHeight*_VAR_mjs__WEBPACK_IMPORTED_MODULE_1__["VAR"].scale
-            );
+    //     Game.ctx.fillRect(
+    //         this.nextColumn*Game.board.frameWidth*VAR.scale,
+    //         this.nextRow*Game.board.frameHeight*VAR.scale,
+    //         Game.board.frameWidth*VAR.scale,
+    //         Game.board.frameHeight*VAR.scale
+    //         );
 
     if(this.states[this.state].flip){ // inverse image if 'flip' property is true
     _index_mjs__WEBPACK_IMPORTED_MODULE_0__["Game"].ctx.save(); // saving a given canvas state
@@ -339,6 +303,43 @@ Character.prototype.draw = function (){ // draw method prototype
     }
 }
 
+// adding collision detection for Character
+Character.prototype.rowAndColumn = function() {
+    // compute in which row and in which column character is located
+    this.row = Math.round(this.y/_index_mjs__WEBPACK_IMPORTED_MODULE_0__["Game"].board.frameHeight);
+    this.column = Math.round(this.x/_index_mjs__WEBPACK_IMPORTED_MODULE_0__["Game"].board.frameWidth);
+    if(this.state.slice(-3) == '_go'){ // determine on which board element char is
+        if (this.state == 'left_go' || this.state == 'right_go'){
+            this.nextRow = this.row;
+            this.nextColumn = this.state == 'left_go' ? Math.floor(this.x/_index_mjs__WEBPACK_IMPORTED_MODULE_0__["Game"].board.frameWidth) : Math.ceil(this.x/_index_mjs__WEBPACK_IMPORTED_MODULE_0__["Game"].board.frameWidth); // round down if movement to left and round up when char moving right
+        } else {
+            this.nextColumn = this.column;
+            this.nextRow = this.state == 'up_go' ? Math.floor(this.y/_index_mjs__WEBPACK_IMPORTED_MODULE_0__["Game"].board.frameHeight) : Math.ceil(this.y/_index_mjs__WEBPACK_IMPORTED_MODULE_0__["Game"].board.frameHeight);
+        };
+        // check if current column and row changes or not && check if next place is empty or not
+        if( !(this.row == this.nextRow && this.column == this.nextColumn) && _index_mjs__WEBPACK_IMPORTED_MODULE_0__["Game"].board.b[this.nextRow][this.nextColumn].type != 'empty' ){
+
+            this.state = this.state.slice(0,-3);
+            this.currentFrame = 0;
+            // when char hits an obstacle we want to put him on the center of the area
+            if (this.row!=this.nextRow){
+                this.y = this.row*_index_mjs__WEBPACK_IMPORTED_MODULE_0__["Game"].board.frameHeight;
+            } else {
+                this.x = this.column*_index_mjs__WEBPACK_IMPORTED_MODULE_0__["Game"].board.frameWidth;
+            }
+        } else { // situation when character can walk on certain area - let's center him!
+            if (this.row!=this.nextRow){ // both ifs are making sure that character is walking in the 'tunnel'
+                this.x = this.nextColumn*_index_mjs__WEBPACK_IMPORTED_MODULE_0__["Game"].board.frameWidth;
+            } else if (this.column!=this.nextColumn){
+                this.y = this.nextRow*_index_mjs__WEBPACK_IMPORTED_MODULE_0__["Game"].board.frameHeight;
+            }
+        }
+    } else { // if char not moving then don't reasign row and col position
+        this.nextRow = this.row;
+        this.nextColumn = this.column;
+    }
+}
+
 function Hero(){ // deifing main hero
     Character.call(this); // extending Character class
     this.state = 'down'; // current animation state of Hero
@@ -355,6 +356,8 @@ function Hero(){ // deifing main hero
     };
     this.x = _index_mjs__WEBPACK_IMPORTED_MODULE_0__["Game"].board.frameWidth;
     this.y = _index_mjs__WEBPACK_IMPORTED_MODULE_0__["Game"].board.frameHeight;
+
+    this.rowAndColumn();
 }
 
 Hero.prototype = new Character(true); // extending Character draw method to Hero constructor
@@ -379,9 +382,11 @@ Hero.prototype.updateState = function(){
     }
 }
 
-function Enemy(){
+Enemy.all = {};
+function Enemy(x,y){
     Character.call(this);
-    this.state = 'left_go'; // current animation state of Enemy
+    Enemy.all[this.id] = this; // assign id to enemy
+    this.state = 'down'; // current animation state of Enemy
     this.states = { // definig all possible animation states of Enemy
         'down': {sx:0, sy:72, f:[0]}, // static
         'down_go': {sx:0, sy:72, f:[1,0,2,0]}, // dynamic
@@ -392,11 +397,55 @@ function Enemy(){
         'right': {sx:63, sy:24, f:[0], flip: true}, // flip set up to inverse character graphics
         'right_go': {sx:63, sy:24, f:[1,0,2,0], flip: true},
         'ko': {sx: 0, sy: 96, f:[0,1,2,3,4,5]} // death animation
-    }
+    };
+    this.x = x;
+    this.y = y;
+    
+    this.rowAndColumn();
+    this.setDirection();
 }
 
 Enemy.prototype = new Character(true); // extending Character draw method to Hero constructor
 Enemy.prototype.constructor = Enemy;
+
+Enemy.prototype.setDirection = function(){
+    this.canGo = this.canGo || []; // assign array for possible directions or use the one already assigned
+    this.canGo.length = 0; // empty the array
+    // enemy already has assigned position
+    // we have to iterate through all positions around it and check if they are empty of solid
+    
+    for (let i = this.column-1; i<= this.column+1; i++){
+
+            for (let j = this.row-1 ; j <= this.row+1; j++){
+
+                if ( !(i==this.column && j==this.row)){ // don't check position where enemy is alrady situated
+                    
+                    if ( i == this.column || j == this.row ) {// don't check corners
+                        if(_index_mjs__WEBPACK_IMPORTED_MODULE_0__["Game"].board.b[j][i].type == 'empty'){
+                            this.canGo.push({x:i, y:j});
+                        } 
+                    }
+                }
+            }
+        };
+
+    if(this.canGo.length>0){
+            this.tempPos = this.canGo[_VAR_mjs__WEBPACK_IMPORTED_MODULE_1__["VAR"].random(0, this.canGo.length-1)];
+            
+            if(this.column < this.tempPos.x){
+                this.state = 'right_go';
+            } else if (this.column> this.tempPos.x){
+                this.state = 'left_go';
+            } else if (this.row < this.tempPos.y){
+                this.state = 'down_go';
+            }else if (this.row > this.tempPos.y){
+                this.state = 'up_go';
+            }
+    } else if (this.state.slice(-2) == 'go'){
+         this.state = this.state.slice(0, -3);
+    }
+    
+}
 
 /***/ }),
 
@@ -462,7 +511,7 @@ document.addEventListener('DOMContentLoaded', function (){
 
 // object containg basic game properties
 let Game = {
-    init: ()=> {
+    init: function() {
         Game.canvas = document.createElement('canvas'); // create canvas
         Game.ctx = Game.canvas.getContext('2d'); // get canvas 2d context
         Game.board = new _Board_mjs__WEBPACK_IMPORTED_MODULE_2__["Board"]();
@@ -474,12 +523,21 @@ let Game = {
 
         Game.hero = new _Characters_mjs__WEBPACK_IMPORTED_MODULE_0__["Hero"]();
 
+        let tempEmpty;
+        // create 5 enemies in random places
+        for (let i = 0 ; i < 5 ; i++){
+            
+            tempEmpty = Game.board.getEmptySpace();
+            new _Characters_mjs__WEBPACK_IMPORTED_MODULE_0__["Enemy"](tempEmpty.x*Game.board.frameWidth, tempEmpty.y*Game.board.frameHeight);
+
+        }
+
         // add event listeners for char sterring
         
         window.addEventListener('keydown', Game.onKey);
         window.addEventListener('keyup', Game.onKey);
 
-        // Game.enemy = new Enemy();
+        
 
         Game.animationLoop(); // launch game animation loop
         },
