@@ -189,6 +189,8 @@ export function Enemy(x,y){
 Enemy.prototype = new Character(true); // extending Character draw method to Hero constructor
 Enemy.prototype.constructor = Enemy;
 
+Enemy.prototype.parent = Character.prototype; // used to extend method assigned to Character
+
 Enemy.prototype.setDirection = function(){
     this.canGo = this.canGo || []; // assign array for possible directions or use the one already assigned
     this.canGo.length = 0; // empty the array
@@ -225,5 +227,13 @@ Enemy.prototype.setDirection = function(){
     } else if (this.state.slice(-2) == 'go'){
          this.state = this.state.slice(0, -3);
     }
-    
+}
+
+Enemy.prototype.rowAndColumn = function(){ // extending rowAndColumn method
+    this.previousState = this.state // saving current state to this.previousState
+    this.parent.rowAndColumn.call(this); // assigning this to parent
+
+    if (this.previousState != this.state && this.state.slice(-2) != 'go' && this.previousState.slice(-2) == 'go'){
+        this.setDirection();
+    }
 }
