@@ -1,6 +1,7 @@
 import {Character, Hero, Enemy} from './Characters.mjs';
 import {VAR} from './VAR.mjs';
 import {Board} from './Board.mjs';
+import { Bomb } from './Bomb.mjs';
 
 document.addEventListener('DOMContentLoaded', function (){ 
     Game.sprite = new Image();
@@ -52,6 +53,9 @@ export let Game = {
                             Game[`key_${i}`] = false;
                         }
                     }
+                    Game.hero.updateState();
+                }else{
+                    new Bomb(Game.hero.column, Game.hero.row);
                 }
                 Game.hero.updateState(); // launch update function when key is pressed (conditions above)
             } else if (e.type == 'keyup'){ // update state when key is released as well (char is standing)

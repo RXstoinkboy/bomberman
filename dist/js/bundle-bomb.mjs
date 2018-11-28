@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = "./src/js/Characters.mjs");
+/******/ 	return __webpack_require__(__webpack_require__.s = "./src/js/Bomb.mjs");
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -674,4 +674,4 @@ let Game = {
 /***/ })
 
 /******/ });
-//# sourceMappingURL=bundle-characters.mjs.map
+//# sourceMappingURL=bundle-bomb.mjs.map

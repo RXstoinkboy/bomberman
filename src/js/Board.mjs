@@ -52,7 +52,6 @@ export function Board(){
 }
 
 Board.prototype.parse = function(arr){ // convert string board to array of arrays with objects inside
-    
     this.emptySpaces = []; // array to store all exisiting empty places (grass) on board
     this.b = [];
     
@@ -95,7 +94,11 @@ for (let j = 0 ; j < this.b[i].length ; j++){ // iterate through each element in
         i * this.frameHeight * VAR.scale,
         this.frameWidth * VAR.scale, // how big is the drawn image
         this.frameHeight * VAR.scale
-    )    
+    )   
+     if(this.b[i][j].type == 'bomb'){ // drawing bombs
+         this.b[i][j].draw();
+     }
+
     }
 
 }

@@ -3,7 +3,8 @@ module.exports = {
 index: './src/js/index.mjs',
 characters: './src/js/Characters.mjs',
 VAR: './src/js/VAR.mjs',
-board: './src/js/VAR.mjs' // tutaj podajemy sciezke do plików wyjsciowych, każdy plik to osobna własciowść,
+board: './src/js/VAR.mjs',
+bomb: './src/js/Bomb.mjs' // tutaj podajemy sciezke do plików wyjsciowych, każdy plik to osobna własciowść,
 },
     output: {
         path: `${__dirname}/dist/js`,

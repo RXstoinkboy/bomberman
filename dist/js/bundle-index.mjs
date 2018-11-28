@@ -152,7 +152,6 @@ function Board(){
 }
 
 Board.prototype.parse = function(arr){ // convert string board to array of arrays with objects inside
-    
     this.emptySpaces = []; // array to store all exisiting empty places (grass) on board
     this.b = [];
     
@@ -195,10 +194,67 @@ for (let j = 0 ; j < this.b[i].length ; j++){ // iterate through each element in
         i * this.frameHeight * _VAR_mjs__WEBPACK_IMPORTED_MODULE_0__["VAR"].scale,
         this.frameWidth * _VAR_mjs__WEBPACK_IMPORTED_MODULE_0__["VAR"].scale, // how big is the drawn image
         this.frameHeight * _VAR_mjs__WEBPACK_IMPORTED_MODULE_0__["VAR"].scale
-    )    
+    )   
+     if(this.b[i][j].type == 'bomb'){ // drawing bombs
+         this.b[i][j].draw();
+     }
+
     }
 
 }
+}
+
+/***/ }),
+
+/***/ "./src/js/Bomb.mjs":
+/*!*************************!*\
+  !*** ./src/js/Bomb.mjs ***!
+  \*************************/
+/*! exports provided: Bomb */
+/***/ (function(__webpack_module__, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Bomb", function() { return Bomb; });
+/* harmony import */ var _index_mjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./index.mjs */ "./src/js/index.mjs");
+/* harmony import */ var _Board_mjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Board.mjs */ "./src/js/Board.mjs");
+/* harmony import */ var _VAR_mjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./VAR.mjs */ "./src/js/VAR.mjs");
+
+
+
+
+Bomb.count = 0;
+Bomb.maxCount = 2;
+function Bomb(column, row){
+    if(Bomb.count < Bomb.maxCount && _index_mjs__WEBPACK_IMPORTED_MODULE_0__["Game"].board.b[row][column].type != 'bomb'){
+        Bomb.count++;
+        this.type = 'bomb';
+        this.sx = _Board_mjs__WEBPACK_IMPORTED_MODULE_1__["Board"].elements.floor.sx;
+        this.sy = _Board_mjs__WEBPACK_IMPORTED_MODULE_1__["Board"].elements.floor.sy;
+        this.bombSx = 126; // sprite position
+        this.bombSy = 16; // sprite position
+        this.frames = [0,0,1,1,2,2]
+        this.currentFrame = 0;
+        this.column = column;
+        this.row = row;
+
+        _index_mjs__WEBPACK_IMPORTED_MODULE_0__["Game"].board.b[this.row][this.column] = this; // changing game greenfield from empty to bomb
+    }
+}
+
+Bomb.prototype.draw = function(){
+    _index_mjs__WEBPACK_IMPORTED_MODULE_0__["Game"].ctx.drawImage(
+        _index_mjs__WEBPACK_IMPORTED_MODULE_0__["Game"].sprite,
+        this.bombSx+this.frames[this.currentFrame]*_index_mjs__WEBPACK_IMPORTED_MODULE_0__["Game"].board.frameWidth, // dynamic definition to assign next frames
+        this.bombSy,
+        _index_mjs__WEBPACK_IMPORTED_MODULE_0__["Game"].board.frameWidth,
+        _index_mjs__WEBPACK_IMPORTED_MODULE_0__["Game"].board.frameHeight,
+        this.column*_index_mjs__WEBPACK_IMPORTED_MODULE_0__["Game"].board.frameWidth*_VAR_mjs__WEBPACK_IMPORTED_MODULE_2__["VAR"].scale,
+        this.row*_index_mjs__WEBPACK_IMPORTED_MODULE_0__["Game"].board.frameHeight*_VAR_mjs__WEBPACK_IMPORTED_MODULE_2__["VAR"].scale,
+        _index_mjs__WEBPACK_IMPORTED_MODULE_0__["Game"].board.frameWidth*_VAR_mjs__WEBPACK_IMPORTED_MODULE_2__["VAR"].scale,
+        _index_mjs__WEBPACK_IMPORTED_MODULE_0__["Game"].board.frameHeight*_VAR_mjs__WEBPACK_IMPORTED_MODULE_2__["VAR"].scale
+    );
+    this.currentFrame = this.currentFrame+1 < this.frames.length ? this.currentFrame+1 : 0;
 }
 
 /***/ }),
@@ -509,6 +565,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Characters_mjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Characters.mjs */ "./src/js/Characters.mjs");
 /* harmony import */ var _VAR_mjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./VAR.mjs */ "./src/js/VAR.mjs");
 /* harmony import */ var _Board_mjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Board.mjs */ "./src/js/Board.mjs");
+/* harmony import */ var _Bomb_mjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Bomb.mjs */ "./src/js/Bomb.mjs");
+
 
 
 
@@ -563,6 +621,9 @@ let Game = {
                             Game[`key_${i}`] = false;
                         }
                     }
+                    Game.hero.updateState();
+                }else{
+                    new _Bomb_mjs__WEBPACK_IMPORTED_MODULE_3__["Bomb"](Game.hero.column, Game.hero.row);
                 }
                 Game.hero.updateState(); // launch update function when key is pressed (conditions above)
             } else if (e.type == 'keyup'){ // update state when key is released as well (char is standing)
