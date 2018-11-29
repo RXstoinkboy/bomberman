@@ -195,7 +195,7 @@ for (let j = 0 ; j < this.b[i].length ; j++){ // iterate through each element in
         this.frameWidth * _VAR_mjs__WEBPACK_IMPORTED_MODULE_0__["VAR"].scale, // how big is the drawn image
         this.frameHeight * _VAR_mjs__WEBPACK_IMPORTED_MODULE_0__["VAR"].scale
     )   
-     if(this.b[i][j].type == 'bomb'){ // drawing bombs
+     if(this.b[i][j].subtype == 'bomb'){ // drawing bombs
          this.b[i][j].draw();
      }
 
@@ -225,10 +225,25 @@ __webpack_require__.r(__webpack_exports__);
 
 Bomb.count = 0;
 Bomb.maxCount = 2;
-function Bomb(column, row){
-    if(Bomb.count < Bomb.maxCount && _index_mjs__WEBPACK_IMPORTED_MODULE_0__["Game"].board.b[row][column].type != 'bomb'){
+Bomb.elements = { // bomb states: before and after explosions
+    'bomb':{sx:126, sy:16, frames:[0,0,1,1,2,2]},
+    'center':{sx:126, sy:64, frames:[0,0,1,1,2,2,3,3,2,2,1,1,0,0]}, // explode and disapear
+    'up_boom':{sx:126, sy:96, frames:[0,0,1,1,2,2,3,3,2,2,1,1,0,0]},
+    'down_boom':{sx:126, sy:96, frames:[0,0,1,1,2,2,3,3,2,2,1,1,0,0]},
+    'right_boom':{sx:126, sy:48, frames:[0,0,1,1,2,2,3,3,2,2,1,1,0,0]},
+    'left_boom':{sx:126, sy:48, frames:[0,0,1,1,2,2,3,3,2,2,1,1,0,0]},
+    'up_boom_end':{sx:126, sy:80, frames:[0,0,1,1,2,2,3,3,2,2,1,1,0,0]},
+    'down_boom_end':{sx:126, sy:80, frames:[0,0,1,1,2,2,3,3,2,2,1,1,0,0], flip:true},
+    'left_boom_end':{sx:126, sy:32, frames:[0,0,1,1,2,2,3,3,2,2,1,1,0,0]},
+    'right_boom_end':{sx:126, sy:32, frames:[0,0,1,1,2,2,3,3,2,2,1,1,0,0], flip: true}, 
+}
+
+function Bomb(column, row, boom_type){
+    if((Bomb.count < Bomb.maxCount && _index_mjs__WEBPACK_IMPORTED_MODULE_0__["Game"].board.b[row][column].type != 'bomb') || boom_type){
         Bomb.count++;
-        this.type = 'bomb';
+        this.type = 'solid'; // make sure that you can't walk over a bomb before it explodes
+        this.subtype = 'bomb';
+        this.data = !boom_type ? Bomb.elements.bomb : Bomb.elements[boom_type];
         this.sx = _Board_mjs__WEBPACK_IMPORTED_MODULE_1__["Board"].elements.floor.sx;
         this.sy = _Board_mjs__WEBPACK_IMPORTED_MODULE_1__["Board"].elements.floor.sy;
         this.bombSx = 126; // sprite position
@@ -238,24 +253,53 @@ function Bomb(column, row){
         this.column = column;
         this.row = row;
 
+        this.timer = 30; // bomb should explode after 30 frames
+        this.range = 2; // 2 blocks range of explosion
+
         _index_mjs__WEBPACK_IMPORTED_MODULE_0__["Game"].board.b[this.row][this.column] = this; // changing game greenfield from empty to bomb
     }
 }
 
 Bomb.prototype.draw = function(){
+    if(this.timer > 0){
+        this.targetX = this.column*_index_mjs__WEBPACK_IMPORTED_MODULE_0__["Game"].board.frameWidth*_VAR_mjs__WEBPACK_IMPORTED_MODULE_2__["VAR"].scale;
+        this.targetY = this.row*_index_mjs__WEBPACK_IMPORTED_MODULE_0__["Game"].board.frameHeight*_VAR_mjs__WEBPACK_IMPORTED_MODULE_2__["VAR"].scale;
+
+        if(this.data.flip) {
+            _index_mjs__WEBPACK_IMPORTED_MODULE_0__["Game"].ctx.save(); // save all vanvas settings
+            if(this.boom_type == 'down_boom_end'){
+                _index_mjs__WEBPACK_IMPORTED_MODULE_0__["Game"].ctx.scale(1,-1); // setting it like that to flip along Y axis
+                this.targetY = this.targetY*-1-(_index_mjs__WEBPACK_IMPORTED_MODULE_0__["Game"].board.frameHeight*_VAR_mjs__WEBPACK_IMPORTED_MODULE_2__["VAR"].scale);
+            }else{
+                _index_mjs__WEBPACK_IMPORTED_MODULE_0__["Game"].ctx.scale(-1,1); // flip along X axis
+                this.targetX = this.targetX*-1-(_index_mjs__WEBPACK_IMPORTED_MODULE_0__["Game"].board.frameWidth*_VAR_mjs__WEBPACK_IMPORTED_MODULE_2__["VAR"].scale);
+            }
+            
+        };
+
     _index_mjs__WEBPACK_IMPORTED_MODULE_0__["Game"].ctx.drawImage(
         _index_mjs__WEBPACK_IMPORTED_MODULE_0__["Game"].sprite,
-        this.bombSx+this.frames[this.currentFrame]*_index_mjs__WEBPACK_IMPORTED_MODULE_0__["Game"].board.frameWidth, // dynamic definition to assign next frames
-        this.bombSy,
+        this.data.sx+this.data.frames[this.currentFrame]*_index_mjs__WEBPACK_IMPORTED_MODULE_0__["Game"].board.frameWidth, // dynamic definition to assign next frames
+        this.data.sy,
         _index_mjs__WEBPACK_IMPORTED_MODULE_0__["Game"].board.frameWidth,
         _index_mjs__WEBPACK_IMPORTED_MODULE_0__["Game"].board.frameHeight,
-        this.column*_index_mjs__WEBPACK_IMPORTED_MODULE_0__["Game"].board.frameWidth*_VAR_mjs__WEBPACK_IMPORTED_MODULE_2__["VAR"].scale,
-        this.row*_index_mjs__WEBPACK_IMPORTED_MODULE_0__["Game"].board.frameHeight*_VAR_mjs__WEBPACK_IMPORTED_MODULE_2__["VAR"].scale,
+        this.targetX,
+        this.targetY,
         _index_mjs__WEBPACK_IMPORTED_MODULE_0__["Game"].board.frameWidth*_VAR_mjs__WEBPACK_IMPORTED_MODULE_2__["VAR"].scale,
         _index_mjs__WEBPACK_IMPORTED_MODULE_0__["Game"].board.frameHeight*_VAR_mjs__WEBPACK_IMPORTED_MODULE_2__["VAR"].scale
     );
-    this.currentFrame = this.currentFrame+1 < this.frames.length ? this.currentFrame+1 : 0;
-}
+    this.currentFrame = this.currentFrame+1 < this.data.frames.length ? this.currentFrame+1 : 0;
+    this.timer--;
+    }else if(this.type =='solid'){ // after explosion
+        Bomb.count--; // reduce number of bombs
+        this.type = 'empty'; // when bomb explodes, it's type is empty
+        this.currentFrame = 0;
+        this.data = Bomb.elements.center; // change state of bomb to center (of explosion)
+        this.timer = this.data.frames.length // change frames amount to length of explosion
+    }else{ // after explosion change to grren field
+        _index_mjs__WEBPACK_IMPORTED_MODULE_0__["Game"].board.b[this.row][this.column] = _Board_mjs__WEBPACK_IMPORTED_MODULE_1__["Board"].elements.floor;
+    }
+};
 
 /***/ }),
 

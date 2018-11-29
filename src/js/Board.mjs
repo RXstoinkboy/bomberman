@@ -95,7 +95,7 @@ for (let j = 0 ; j < this.b[i].length ; j++){ // iterate through each element in
         this.frameWidth * VAR.scale, // how big is the drawn image
         this.frameHeight * VAR.scale
     )   
-     if(this.b[i][j].type == 'bomb'){ // drawing bombs
+     if(this.b[i][j].subtype == 'bomb'){ // drawing bombs
          this.b[i][j].draw();
      }
 
