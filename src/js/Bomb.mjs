@@ -19,8 +19,11 @@ Bomb.elements = { // bomb states: before and after explosions
 
 export function Bomb(column, row, boom_type){
     if((Bomb.count < Bomb.maxCount && Game.board.b[row][column].type != 'bomb') || boom_type){
-        Bomb.count++;
-        this.type = 'solid'; // make sure that you can't walk over a bomb before it explodes
+        if(!boom_type){
+            Bomb.count++;
+        }
+        this.boom_type = boom_type;
+        this.type = boom_type ? 'empty' : 'solid'; // make sure that you can't walk over a bomb before it explodes
         this.subtype = 'bomb';
         this.data = !boom_type ? Bomb.elements.bomb : Bomb.elements[boom_type];
         this.sx = Board.elements.floor.sx;
@@ -32,7 +35,7 @@ export function Bomb(column, row, boom_type){
         this.column = column;
         this.row = row;
 
-        this.timer = 30; // bomb should explode after 30 frames
+        this.timer = boom_type ? this.data.frames.length : 30; // bomb should explode after 30 frames
         this.range = 2; // 2 blocks range of explosion
 
         Game.board.b[this.row][this.column] = this; // changing game greenfield from empty to bomb
@@ -67,6 +70,9 @@ Bomb.prototype.draw = function(){
         Game.board.frameWidth*VAR.scale,
         Game.board.frameHeight*VAR.scale
     );
+    if(this.data.flip){
+        Game.ctx.restore(); // restore previos canvas settings
+    }
     this.currentFrame = this.currentFrame+1 < this.data.frames.length ? this.currentFrame+1 : 0;
     this.timer--;
     }else if(this.type =='solid'){ // after explosion
@@ -75,6 +81,37 @@ Bomb.prototype.draw = function(){
         this.currentFrame = 0;
         this.data = Bomb.elements.center; // change state of bomb to center (of explosion)
         this.timer = this.data.frames.length // change frames amount to length of explosion
+        this.booms = []; // places where flame should appear (4 directions)
+        for (let i = 0; i < 4; i++){ // check all directions where flame can appear
+            this.axis = i%2 ? 'tempColumn' : 'tempRow'; // i=0 is up, i=1 is right, i=2 is down, i=3 is left
+            this.grow = i%3 ? true : false;
+
+            this.tempColumn = this.column;
+            this.tempRow = this.row;
+
+            if(this.axis == 'tempColumn' && this.grow){ // defining what type of graphics should be used when explosion expands left, right etc ...
+                this.tempBoomType = 'right_boom';
+            }else if(this.axis == 'tempColumn' && !this.grow){
+                this.tempBoomType = 'left_boom';
+            }else if(this.axis == 'tempRow' && this.grow){
+                this.tempBoomType = 'down_boom';
+            }else if(this.axis == 'tempRow' && !this.grow){
+                this.tempBoomType = 'up_boom';
+            }
+
+            for(let j=0 ; j < this.range ; j++){
+                this[this.axis] = this[this.axis]+(this.grow ? 1 : -1);
+                if(Game.board.b[this.tempRow][this.tempColumn].type != 'solid'){
+                    this.tempCrate = Game.board.b[this.tempRow][this.tempColumn].type == 'soft';
+                    new Bomb(this.tempColumn, this.tempRow, this.tempBoomType+( j==this.range-1 ? '_end' : '' )); // flames ending
+                    if(this.tempCrate){
+                        break;
+                    }
+                }else{
+                    break;
+                }
+            }
+        }
     }else{ // after explosion change to grren field
         Game.board.b[this.row][this.column] = Board.elements.floor;
     }
