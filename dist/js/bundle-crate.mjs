@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = "./src/js/index.mjs");
+/******/ 	return __webpack_require__(__webpack_require__.s = "./src/js/Crate.mjs");
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -952,4 +952,4 @@ let Game = {
 /***/ })
 
 /******/ });
-//# sourceMappingURL=bundle-index.mjs.map
+//# sourceMappingURL=bundle-crate.mjs.map
