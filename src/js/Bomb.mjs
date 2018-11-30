@@ -67,11 +67,11 @@ Bomb.elements = { // bomb states: before and after explosions
 }
 
 export function Bomb (column, row, boomType) {
-  if ((Bomb.count < Bomb.maxCount && Game.board.b[row][column].subtype != 'bomb' && !boomType) || (Game.board.b[row][column].subtype != 'board' || Game.board.b[row][column].boomType.slice(-3)=='end')) {
+  if ((Bomb.count < Bomb.maxCount && Game.board.b[row][column].subtype != 'bomb' && !boomType) || (boomType && Game.board.b[row][column].subtype == 'board' && !Game.board.b[row][column].bumType)) {
     if (!boomType) {
       Bomb.count++
     }
-    this.boom_type = boomType
+    this.boomType = boomType
     this.type = boomType ? 'empty' : 'solid' // make sure that you can't walk over a bomb before it explodes
     this.subtype = 'bomb'
     this.data = !boomType ? Bomb.elements.bomb : Bomb.elements[boomType]
@@ -98,7 +98,7 @@ Bomb.prototype.draw = function () {
 
     if (this.data.flip) {
       Game.ctx.save() // save all vanvas settings
-      if (this.boom_type == 'down_boom_end') {
+      if (this.boomType == 'down_boom_end') {
         Game.ctx.scale(1, -1) // setting it like that to flip along Y axis
         this.targetY = this.targetY * -1 - (Game.board.frameHeight * VAR.scale)
       } else {
@@ -156,7 +156,7 @@ Bomb.prototype.draw = function () {
           } else {
             new Bomb(this.tempColumn, this.tempRow, this.tempBoomType + (j == this.range - 1 ? '_end' : ''))
           } // flames ending
-        } else if (Game.board.b[this.tempRow][this.tempColumn].subtype == 'bomb' && !Game.board.b[this.tempRow][this.tempColumn].boom_type) { // check if there is a bomb
+        } else if (Game.board.b[this.tempRow][this.tempColumn].subtype == 'bomb' && !Game.board.b[this.tempRow][this.tempColumn].boomType) { // check if there is a bomb
           Game.board.b[this.tempRow][this.tempColumn].timer = 0
         } else {
           break

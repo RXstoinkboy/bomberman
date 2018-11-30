@@ -4,6 +4,7 @@ import {
 import {
   Game
 } from './index.mjs'
+import { Bomb } from './Bomb.mjs'
 
 Board.templates = [ // creating board templates here
   [
