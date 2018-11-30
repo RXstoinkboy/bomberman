@@ -98,8 +98,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Board", function() { return Board; });
 /* harmony import */ var _VAR_mjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./VAR.mjs */ "./src/js/VAR.mjs");
 /* harmony import */ var _index_mjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./index.mjs */ "./src/js/index.mjs");
-/* harmony import */ var _Crate_mjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Crate.mjs */ "./src/js/Crate.mjs");
-
 
 
 
@@ -115,7 +113,7 @@ Board.templates = [ // creating board templates here
     'W             W',
     'W X X X X X X W',
     'W             W',
-    'WWWWWWWWWWWWWWW',
+    'WWWWWWWWWWWWWWW'
   ],
   [
     'WWWWWWWWWWWWWWW',
@@ -128,9 +126,9 @@ Board.templates = [ // creating board templates here
     'W             W',
     'W XXX X X XXX W',
     'W             W',
-    'WWWWWWWWWWWWWWW',
-  ],
-];
+    'WWWWWWWWWWWWWWW'
+  ]
+]
 
 // define all board elements
 // type: defines what kind of material it is:
@@ -142,69 +140,69 @@ Board.elements = {
     sx: 174,
     sy: 16,
     type: 'empty',
-    subtype: 'board',
+    subtype: 'board'
   },
   W: {
     sx: 190,
     sy: 16,
     type: 'solid',
-    subtype: 'board',
+    subtype: 'board'
   }, // outer wall
   X: {
     sx: 206,
     sy: 16,
     type: 'solid',
-    subtype: 'board',
+    subtype: 'board'
   }, // inner wall
   box: {
     sx: 126,
     sy: 0,
     type: 'soft',
     subtype: 'board',
-    koObj: 'Crate',
-  },
-};
-function Board() {
-  this.frameWidth = 16;
-  this.frameHeight = 16;
-  this.parse(Board.templates[_VAR_mjs__WEBPACK_IMPORTED_MODULE_0__["VAR"].random(0, Board.templates.length - 1)]); // pick rundom board from our templates and convert it into right format
+    koObj: 'Crate'
+  }
+}
+function Board () {
+  this.frameWidth = 16
+  this.frameHeight = 16
+  this.parse(Board.templates[_VAR_mjs__WEBPACK_IMPORTED_MODULE_0__["VAR"].random(0, Board.templates.length - 1)]) // pick rundom board from our templates and convert it into right format
   // add boxes on the board
   for (let i = 0; i < 20; i++) {
-    this.addCrate();
+    this.addCrate()
   }
 }
 
 Board.prototype.parse = function (arr) { // convert string board to array of arrays with objects inside
-  this.emptySpaces = []; // array to store all exisiting empty places (grass) on board
-  this.b = [];
+  this.emptySpaces = [] // array to store all exisiting empty places (grass) on board
+  this.b = []
 
   for (let i = 0; i < arr.length; i++) { // iterate through each raw of the board
-    this.b.push([]); // create array for each row of the board
+    this.b.push([]) // create array for each row of the board
     for (let j = 0; j < arr[i].length; j++) { // iterate through each element (letter) in each row
       // push corresponding object definition in place of a specific letter key
-      this.b[i].push(Board.elements[arr[i].charAt(j) == ' ' ? 'floor' : arr[i].charAt(j)]); // pick appropriate obj definition from Board.elements
+      this.b[i].push(Board.elements[arr[i].charAt(j) == ' ' ? 'floor' : arr[i].charAt(j)]) // pick appropriate obj definition from Board.elements
 
       if (this.b[i][j].type === 'empty' && !(i == 1 && j == 1) && !(i == 2 && j == 1) && !(i == 1 && j == 2)) {
         this.emptySpaces.push({
           x: j,
-          y: i,
-        });
+          y: i
+        })
       }
     }
   }
-  this.emptySpaces = _VAR_mjs__WEBPACK_IMPORTED_MODULE_0__["VAR"].shuffle(this.emptySpaces); // shuffle array storing empty spaces
-};
+  this.emptySpaces = _VAR_mjs__WEBPACK_IMPORTED_MODULE_0__["VAR"].shuffle(this.emptySpaces) // shuffle array storing empty spaces
+}
 
 Board.prototype.getEmptySpace = function () {
-  return this.emptySpaces.length > 0 ? this.emptySpaces.shift() : null;
-};
+  return this.emptySpaces.length > 0 ? this.emptySpaces.shift() : null
+}
 
 Board.prototype.addCrate = function () { // adding crate
-  const position = this.getEmptySpace();
+  const position = this.getEmptySpace()
   if (position) {
-    this.b[position.y][position.x] = Board.elements.box;
+    this.b[position.y][position.x] = Board.elements.box
   }
-};
+}
 
 Board.prototype.draw = function () {
   for (let i = 0; i < this.b.length; i++) { // iterate through each row
@@ -218,14 +216,14 @@ Board.prototype.draw = function () {
         j * this.frameWidth * _VAR_mjs__WEBPACK_IMPORTED_MODULE_0__["VAR"].scale, // where to put it on canvas
         i * this.frameHeight * _VAR_mjs__WEBPACK_IMPORTED_MODULE_0__["VAR"].scale,
         this.frameWidth * _VAR_mjs__WEBPACK_IMPORTED_MODULE_0__["VAR"].scale, // how big is the drawn image
-        this.frameHeight * _VAR_mjs__WEBPACK_IMPORTED_MODULE_0__["VAR"].scale,
-      );
-      if (this.b[i][j].subtype == 'board') { // drawing bombs
-        this.b[i][j].draw();
+        this.frameHeight * _VAR_mjs__WEBPACK_IMPORTED_MODULE_0__["VAR"].scale
+      )
+      if (this.b[i][j].subtype != 'board') { // drawing bombs
+        this.b[i][j].draw()
       }
     }
   }
-};
+}
 
 
 /***/ }),
@@ -243,105 +241,107 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _index_mjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./index.mjs */ "./src/js/index.mjs");
 /* harmony import */ var _Board_mjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Board.mjs */ "./src/js/Board.mjs");
 /* harmony import */ var _VAR_mjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./VAR.mjs */ "./src/js/VAR.mjs");
+/* harmony import */ var _Crate_mjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Crate.mjs */ "./src/js/Crate.mjs");
 
 
 
 
-Bomb.count = 0;
-Bomb.maxCount = 2;
+
+Bomb.count = 0
+Bomb.maxCount = 2
 Bomb.elements = { // bomb states: before and after explosions
   bomb: {
     sx: 126,
     sy: 16,
-    frames: [0, 0, 1, 1, 2, 2],
+    frames: [0, 0, 1, 1, 2, 2]
   },
   center: {
     sx: 126,
     sy: 64,
-    frames: [0, 0, 1, 1, 2, 2, 3, 3, 2, 2, 1, 1, 0, 0],
+    frames: [0, 0, 1, 1, 2, 2, 3, 3, 2, 2, 1, 1, 0, 0]
   }, // explode and disapear
   up_boom: {
     sx: 126,
     sy: 96,
-    frames: [0, 0, 1, 1, 2, 2, 3, 3, 2, 2, 1, 1, 0, 0],
+    frames: [0, 0, 1, 1, 2, 2, 3, 3, 2, 2, 1, 1, 0, 0]
   },
   down_boom: {
     sx: 126,
     sy: 96,
-    frames: [0, 0, 1, 1, 2, 2, 3, 3, 2, 2, 1, 1, 0, 0],
+    frames: [0, 0, 1, 1, 2, 2, 3, 3, 2, 2, 1, 1, 0, 0]
   },
   right_boom: {
     sx: 126,
     sy: 48,
-    frames: [0, 0, 1, 1, 2, 2, 3, 3, 2, 2, 1, 1, 0, 0],
+    frames: [0, 0, 1, 1, 2, 2, 3, 3, 2, 2, 1, 1, 0, 0]
   },
   left_boom: {
     sx: 126,
     sy: 48,
-    frames: [0, 0, 1, 1, 2, 2, 3, 3, 2, 2, 1, 1, 0, 0],
+    frames: [0, 0, 1, 1, 2, 2, 3, 3, 2, 2, 1, 1, 0, 0]
   },
   up_boom_end: {
     sx: 126,
     sy: 80,
-    frames: [0, 0, 1, 1, 2, 2, 3, 3, 2, 2, 1, 1, 0, 0],
+    frames: [0, 0, 1, 1, 2, 2, 3, 3, 2, 2, 1, 1, 0, 0]
   },
   down_boom_end: {
     sx: 126,
     sy: 80,
     frames: [0, 0, 1, 1, 2, 2, 3, 3, 2, 2, 1, 1, 0, 0],
-    flip: true,
+    flip: true
   },
   left_boom_end: {
     sx: 126,
     sy: 32,
-    frames: [0, 0, 1, 1, 2, 2, 3, 3, 2, 2, 1, 1, 0, 0],
+    frames: [0, 0, 1, 1, 2, 2, 3, 3, 2, 2, 1, 1, 0, 0]
   },
   right_boom_end: {
     sx: 126,
     sy: 32,
     frames: [0, 0, 1, 1, 2, 2, 3, 3, 2, 2, 1, 1, 0, 0],
-    flip: true,
-  },
-};
+    flip: true
+  }
+}
 
-function Bomb(column, row, boom_type) {
-  if ((Bomb.count < Bomb.maxCount && _index_mjs__WEBPACK_IMPORTED_MODULE_0__["Game"].board.b[row][column].type != 'bomb') || boom_type) {
-    if (!boom_type) {
-      Bomb.count++;
+function Bomb (column, row, boomType) {
+  if ((Bomb.count < Bomb.maxCount && _index_mjs__WEBPACK_IMPORTED_MODULE_0__["Game"].board.b[row][column].subtype != 'bomb' && !boomType) || (_index_mjs__WEBPACK_IMPORTED_MODULE_0__["Game"].board.b[row][column].subtype != 'board' || _index_mjs__WEBPACK_IMPORTED_MODULE_0__["Game"].board.b[row][column].boomType.slice(-3)=='end')) {
+    if (!boomType) {
+      Bomb.count++
     }
-    this.boom_type = boom_type;
-    this.type = boom_type ? 'empty' : 'solid'; // make sure that you can't walk over a bomb before it explodes
-    this.subtype = 'bomb';
-    this.data = !boom_type ? Bomb.elements.bomb : Bomb.elements[boom_type];
-    this.sx = _Board_mjs__WEBPACK_IMPORTED_MODULE_1__["Board"].elements.floor.sx;
-    this.sy = _Board_mjs__WEBPACK_IMPORTED_MODULE_1__["Board"].elements.floor.sy;
-    this.bombSx = 126; // sprite position
-    this.bombSy = 16; // sprite position
-    this.frames = [0, 0, 1, 1, 2, 2];
-    this.currentFrame = 0;
-    this.column = column;
-    this.row = row;
+    this.boom_type = boomType
+    this.type = boomType ? 'empty' : 'solid' // make sure that you can't walk over a bomb before it explodes
+    this.subtype = 'bomb'
+    this.data = !boomType ? Bomb.elements.bomb : Bomb.elements[boomType]
+    this.sx = _Board_mjs__WEBPACK_IMPORTED_MODULE_1__["Board"].elements.floor.sx
+    this.sy = _Board_mjs__WEBPACK_IMPORTED_MODULE_1__["Board"].elements.floor.sy
+    this.bombSx = 126 // sprite position
+    this.bombSy = 16 // sprite position
+    this.frames = [0, 0, 1, 1, 2, 2]
+    this.currentFrame = 0
+    this.column = column
+    this.row = row
 
-    this.timer = boom_type ? this.data.frames.length : 30; // bomb should explode after 30 frames
-    this.range = 2; // 2 blocks range of explosion
+    this.timer = boomType ? this.data.frames.length : 30 // bomb should explode after 30 frames
+    this.range = 2 // 2 blocks range of explosion
 
-    _index_mjs__WEBPACK_IMPORTED_MODULE_0__["Game"].board.b[this.row][this.column] = this; // changing game greenfield from empty to bomb
+    _index_mjs__WEBPACK_IMPORTED_MODULE_0__["Game"].board.b[row][column] = this // changing game greenfield from empty to bomb
   }
 }
 
 Bomb.prototype.draw = function () {
   if (this.timer > 0) {
-    this.targetX = this.column * _index_mjs__WEBPACK_IMPORTED_MODULE_0__["Game"].board.frameWidth * _VAR_mjs__WEBPACK_IMPORTED_MODULE_2__["VAR"].scale;
-    this.targetY = this.row * _index_mjs__WEBPACK_IMPORTED_MODULE_0__["Game"].board.frameHeight * _VAR_mjs__WEBPACK_IMPORTED_MODULE_2__["VAR"].scale;
+    this.targetX = this.column * _index_mjs__WEBPACK_IMPORTED_MODULE_0__["Game"].board.frameWidth * _VAR_mjs__WEBPACK_IMPORTED_MODULE_2__["VAR"].scale
+    this.targetY = this.row * _index_mjs__WEBPACK_IMPORTED_MODULE_0__["Game"].board.frameHeight * _VAR_mjs__WEBPACK_IMPORTED_MODULE_2__["VAR"].scale
 
     if (this.data.flip) {
-      _index_mjs__WEBPACK_IMPORTED_MODULE_0__["Game"].ctx.save(); // save all vanvas settings
+      _index_mjs__WEBPACK_IMPORTED_MODULE_0__["Game"].ctx.save() // save all vanvas settings
       if (this.boom_type == 'down_boom_end') {
-        _index_mjs__WEBPACK_IMPORTED_MODULE_0__["Game"].ctx.scale(1, -1); // setting it like that to flip along Y axis
-        this.targetY = this.targetY * -1 - (_index_mjs__WEBPACK_IMPORTED_MODULE_0__["Game"].board.frameHeight * _VAR_mjs__WEBPACK_IMPORTED_MODULE_2__["VAR"].scale);
+        _index_mjs__WEBPACK_IMPORTED_MODULE_0__["Game"].ctx.scale(1, -1) // setting it like that to flip along Y axis
+        this.targetY = this.targetY * -1 - (_index_mjs__WEBPACK_IMPORTED_MODULE_0__["Game"].board.frameHeight * _VAR_mjs__WEBPACK_IMPORTED_MODULE_2__["VAR"].scale)
       } else {
-        _index_mjs__WEBPACK_IMPORTED_MODULE_0__["Game"].ctx.scale(-1, 1); // flip along X axis
-        this.targetX = this.targetX * -1 - (_index_mjs__WEBPACK_IMPORTED_MODULE_0__["Game"].board.frameWidth * _VAR_mjs__WEBPACK_IMPORTED_MODULE_2__["VAR"].scale);
+        _index_mjs__WEBPACK_IMPORTED_MODULE_0__["Game"].ctx.scale(-1, 1) // flip along X axis
+        this.targetX = this.targetX * -1 - (_index_mjs__WEBPACK_IMPORTED_MODULE_0__["Game"].board.frameWidth * _VAR_mjs__WEBPACK_IMPORTED_MODULE_2__["VAR"].scale)
       }
     }
 
@@ -354,58 +354,57 @@ Bomb.prototype.draw = function () {
       this.targetX,
       this.targetY,
       _index_mjs__WEBPACK_IMPORTED_MODULE_0__["Game"].board.frameWidth * _VAR_mjs__WEBPACK_IMPORTED_MODULE_2__["VAR"].scale,
-      _index_mjs__WEBPACK_IMPORTED_MODULE_0__["Game"].board.frameHeight * _VAR_mjs__WEBPACK_IMPORTED_MODULE_2__["VAR"].scale,
-    );
+      _index_mjs__WEBPACK_IMPORTED_MODULE_0__["Game"].board.frameHeight * _VAR_mjs__WEBPACK_IMPORTED_MODULE_2__["VAR"].scale
+    )
     if (this.data.flip) {
-      _index_mjs__WEBPACK_IMPORTED_MODULE_0__["Game"].ctx.restore(); // restore previos canvas settings
+      _index_mjs__WEBPACK_IMPORTED_MODULE_0__["Game"].ctx.restore() // restore previos canvas settings
     }
-    this.currentFrame = this.currentFrame + 1 < this.data.frames.length ? this.currentFrame + 1 : 0;
-    this.timer--;
+    this.currentFrame = this.currentFrame + 1 < this.data.frames.length ? this.currentFrame + 1 : 0
+    this.timer--
   } else if (this.type == 'solid') { // after explosion
-    Bomb.count--; // reduce number of bombs
-    this.type = 'empty'; // when bomb explodes, it's type is empty
-    this.currentFrame = 0;
-    this.data = Bomb.elements.center; // change state of bomb to center (of explosion)
-    this.timer = this.data.frames.length; // change frames amount to length of explosion
-    this.booms = []; // places where flame should appear (4 directions)
+    Bomb.count-- // reduce number of bombs
+    this.type = 'empty' // when bomb explodes, it's type is empty
+    this.currentFrame = 0
+    this.data = Bomb.elements.center // change state of bomb to center (of explosion)
+    this.timer = this.data.frames.length // change frames amount to length of explosion
+    this.booms = [] // places where flame should appear (4 directions)
     for (let i = 0; i < 4; i++) { // check all directions where flame can appear
-      this.axis = i % 2 ? 'tempColumn' : 'tempRow'; // i=0 is up, i=1 is right, i=2 is down, i=3 is left
-      this.grow = !!(i % 3);
+      this.axis = i % 2 ? 'tempColumn' : 'tempRow' // i=0 is up, i=1 is right, i=2 is down, i=3 is left
+      this.grow = !!(i % 3)
 
-      this.tempColumn = this.column;
-      this.tempRow = this.row;
+      this.tempColumn = this.column
+      this.tempRow = this.row
 
       if (this.axis == 'tempColumn' && this.grow) { // defining what type of graphics should be used when explosion expands left, right etc ...
-        this.tempBoomType = 'right_boom';
+        this.tempBoomType = 'right_boom'
       } else if (this.axis == 'tempColumn' && !this.grow) {
-        this.tempBoomType = 'left_boom';
+        this.tempBoomType = 'left_boom'
       } else if (this.axis == 'tempRow' && this.grow) {
-        this.tempBoomType = 'down_boom';
+        this.tempBoomType = 'down_boom'
       } else if (this.axis == 'tempRow' && !this.grow) {
-        this.tempBoomType = 'up_boom';
+        this.tempBoomType = 'up_boom'
       }
 
       for (let j = 0; j < this.range; j++) {
-        this[this.axis] = this[this.axis] + (this.grow ? 1 : -1);
+        this[this.axis] = this[this.axis] + (this.grow ? 1 : -1)
         if (_index_mjs__WEBPACK_IMPORTED_MODULE_0__["Game"].board.b[this.tempRow][this.tempColumn].type != 'solid') {
           if (_index_mjs__WEBPACK_IMPORTED_MODULE_0__["Game"].board.b[this.tempRow][this.tempColumn].koObj) {
-            new window[_index_mjs__WEBPACK_IMPORTED_MODULE_0__["Game"].board.b[this.tempRow][this.tempColumn].koObj](this.tempColumn, this.tempRow);
-            break;
+            new _Crate_mjs__WEBPACK_IMPORTED_MODULE_3__["Crate"](this.tempColumn, this.tempRow)
+            break
           } else {
-            new Bomb(this.tempColumn, this.tempRow, this.tempBoomType + (j == this.range - 1 ? '_end' : ''));
+            new Bomb(this.tempColumn, this.tempRow, this.tempBoomType + (j == this.range - 1 ? '_end' : ''))
           } // flames ending
-
         } else if (_index_mjs__WEBPACK_IMPORTED_MODULE_0__["Game"].board.b[this.tempRow][this.tempColumn].subtype == 'bomb' && !_index_mjs__WEBPACK_IMPORTED_MODULE_0__["Game"].board.b[this.tempRow][this.tempColumn].boom_type) { // check if there is a bomb
-          _index_mjs__WEBPACK_IMPORTED_MODULE_0__["Game"].board.b[this.tempRow][this.tempColumn].timer = 0;
+          _index_mjs__WEBPACK_IMPORTED_MODULE_0__["Game"].board.b[this.tempRow][this.tempColumn].timer = 0
         } else {
-          break;
+          break
         }
       }
     }
   } else { // after explosion change to grren field
-    _index_mjs__WEBPACK_IMPORTED_MODULE_0__["Game"].board.b[this.row][this.column] = _Board_mjs__WEBPACK_IMPORTED_MODULE_1__["Board"].elements.floor;
+    _index_mjs__WEBPACK_IMPORTED_MODULE_0__["Game"].board.b[this.row][this.column] = _Board_mjs__WEBPACK_IMPORTED_MODULE_1__["Board"].elements.floor
   }
-};
+}
 
 
 /***/ }),
@@ -757,38 +756,38 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-function Crate(column, row) { // place to put a crate
-  this.sx = _Board_mjs__WEBPACK_IMPORTED_MODULE_0__["Board"].elements.floor.sx;
-  this.sy = _Board_mjs__WEBPACK_IMPORTED_MODULE_0__["Board"].elements.floor.sy;
-  this.animSx = 126;
-  this.animSy = 0;
-  this.currentFrame = 0;
-  this.frames = [0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5];
-  this.type = 'empty';
-  this.subtype = 'crate';
-  this.row;
-  this.column = column;
+function Crate (column, row) { // place to put a crate
+  this.sx = _Board_mjs__WEBPACK_IMPORTED_MODULE_0__["Board"].elements.floor.sx
+  this.sy = _Board_mjs__WEBPACK_IMPORTED_MODULE_0__["Board"].elements.floor.sy
+  this.animSx = 126
+  this.animSy = 0
+  this.currentFrame = 0
+  this.frames = [0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5]
+  this.type = 'empty'
+  this.subtype = 'crate'
+  this.row = row
+  this.column = column
 
-  _index_mjs__WEBPACK_IMPORTED_MODULE_2__["Game"].board.b[row][column] = this;
+  _index_mjs__WEBPACK_IMPORTED_MODULE_2__["Game"].board.b[row][column] = this
 }
 
 Crate.prototype.draw = function () {
   _index_mjs__WEBPACK_IMPORTED_MODULE_2__["Game"].ctx.drawImage(
     _index_mjs__WEBPACK_IMPORTED_MODULE_2__["Game"].sprite,
-    this.animSx * this.frames[this.currentFrame] * _index_mjs__WEBPACK_IMPORTED_MODULE_2__["Game"].board.frameWidth,
+    this.animSx + this.frames[this.currentFrame] * _index_mjs__WEBPACK_IMPORTED_MODULE_2__["Game"].board.frameWidth,
     this.animSy,
     _index_mjs__WEBPACK_IMPORTED_MODULE_2__["Game"].board.frameWidth,
     _index_mjs__WEBPACK_IMPORTED_MODULE_2__["Game"].board.frameHeight,
     this.column * _index_mjs__WEBPACK_IMPORTED_MODULE_2__["Game"].board.frameWidth * _VAR_mjs__WEBPACK_IMPORTED_MODULE_1__["VAR"].scale,
     this.row * _index_mjs__WEBPACK_IMPORTED_MODULE_2__["Game"].board.frameHeight * _VAR_mjs__WEBPACK_IMPORTED_MODULE_1__["VAR"].scale,
     _index_mjs__WEBPACK_IMPORTED_MODULE_2__["Game"].board.frameWidth * _VAR_mjs__WEBPACK_IMPORTED_MODULE_1__["VAR"].scale,
-    _index_mjs__WEBPACK_IMPORTED_MODULE_2__["Game"].board.frameWidth * _VAR_mjs__WEBPACK_IMPORTED_MODULE_1__["VAR"].scale,
-  );
-  this.currentFrame++;
+    _index_mjs__WEBPACK_IMPORTED_MODULE_2__["Game"].board.frameWidth * _VAR_mjs__WEBPACK_IMPORTED_MODULE_1__["VAR"].scale
+  )
+  this.currentFrame++
   if (this.currentFrame >= this.frames.length) {
-    _index_mjs__WEBPACK_IMPORTED_MODULE_2__["Game"].board.b[this.row][this.column] = _Board_mjs__WEBPACK_IMPORTED_MODULE_0__["Board"].elements.floor; // after explosion put floor into bombs place
+    _index_mjs__WEBPACK_IMPORTED_MODULE_2__["Game"].board.b[this.row][this.column] = _Board_mjs__WEBPACK_IMPORTED_MODULE_0__["Board"].elements.floor // after explosion put floor into bombs place
   }
-};
+}
 
 
 /***/ }),
@@ -845,108 +844,106 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _VAR_mjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./VAR.mjs */ "./src/js/VAR.mjs");
 /* harmony import */ var _Board_mjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Board.mjs */ "./src/js/Board.mjs");
 /* harmony import */ var _Bomb_mjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Bomb.mjs */ "./src/js/Bomb.mjs");
-/* harmony import */ var _Crate_mjs__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Crate.mjs */ "./src/js/Crate.mjs");
-
 
 
 
 
 
 document.addEventListener('DOMContentLoaded', () => {
-  Game.sprite = new Image();
-  Game.sprite.onload = Game.init; // makes sure that init() is launched after image is loaded
-  Game.sprite.src = 'dist/img/bombe.png';
-});
+  Game.sprite = new Image()
+  Game.sprite.onload = Game.init // makes sure that init() is launched after image is loaded
+  Game.sprite.src = 'dist/img/bombe.png'
+})
 
 // object containg basic game properties
 let Game = {
-  init() {
-    Game.canvas = document.createElement('canvas'); // create canvas
-    Game.ctx = Game.canvas.getContext('2d'); // get canvas 2d context
-    Game.board = new _Board_mjs__WEBPACK_IMPORTED_MODULE_2__["Board"]();
-    Game.layout(); // launch function to resize W and H based on window inner dimensions
-    window.addEventListener('resize', Game.layout); // launch layout() function on window resize
-    document.body.appendChild(Game.canvas); // append canvas to DOM
+  init () {
+    Game.canvas = document.createElement('canvas') // create canvas
+    Game.ctx = Game.canvas.getContext('2d') // get canvas 2d context
+    Game.board = new _Board_mjs__WEBPACK_IMPORTED_MODULE_2__["Board"]()
+    Game.layout() // launch function to resize W and H based on window inner dimensions
+    window.addEventListener('resize', Game.layout) // launch layout() function on window resize
+    document.body.appendChild(Game.canvas) // append canvas to DOM
 
-    Game.toDraw = {}; // object to store all characters
+    Game.toDraw = {} // object to store all characters
 
-    Game.hero = new _Characters_mjs__WEBPACK_IMPORTED_MODULE_0__["Hero"]();
+    Game.hero = new _Characters_mjs__WEBPACK_IMPORTED_MODULE_0__["Hero"]()
 
-    let tempEmpty;
+    let tempEmpty
     // create 5 enemies in random places
     for (let i = 0; i < 5; i++) {
-      tempEmpty = Game.board.getEmptySpace();
-      new _Characters_mjs__WEBPACK_IMPORTED_MODULE_0__["Enemy"](tempEmpty.x * Game.board.frameWidth, tempEmpty.y * Game.board.frameHeight);
+      tempEmpty = Game.board.getEmptySpace()
+      new _Characters_mjs__WEBPACK_IMPORTED_MODULE_0__["Enemy"](tempEmpty.x * Game.board.frameWidth, tempEmpty.y * Game.board.frameHeight)
     }
 
     // add event listeners for char sterring
 
-    window.addEventListener('keydown', Game.onKey);
-    window.addEventListener('keyup', Game.onKey);
+    window.addEventListener('keydown', Game.onKey)
+    window.addEventListener('keyup', Game.onKey)
 
-    Game.animationLoop(); // launch game animation loop
+    Game.animationLoop() // launch game animation loop
   },
 
   onKey: (e) => {
     if (e.keyCode >= 37 && e.keyCode <= 40 || e.keyCode == 32) { // use only arrows and space in game
-      e.preventDefault(); // turn off standard key actions
+      e.preventDefault() // turn off standard key actions
       if (e.type == 'keydown' && !Game[`key_${e.keyCode}`]) { // when key has been pressed
-        Game[`key_${e.keyCode}`] = true; // set key to work
+        Game[`key_${e.keyCode}`] = true // set key to work
         if (e.keyCode >= 37 && e.keyCode <= 40) { // if any arrow was pressed then make sure to disable previously pressed arrow
           for (let i = 37; i <= 40; i++) {
             if (i != e.keyCode) {
-              Game[`key_${i}`] = false;
+              Game[`key_${i}`] = false
             }
           }
-          Game.hero.updateState();
+          Game.hero.updateState()
         } else {
-          new _Bomb_mjs__WEBPACK_IMPORTED_MODULE_3__["Bomb"](Game.hero.column, Game.hero.row);
+          new _Bomb_mjs__WEBPACK_IMPORTED_MODULE_3__["Bomb"](Game.hero.column, Game.hero.row)
         }
-        Game.hero.updateState(); // launch update function when key is pressed (conditions above)
+        Game.hero.updateState() // launch update function when key is pressed (conditions above)
       } else if (e.type == 'keyup') { // update state when key is released as well (char is standing)
-        Game[`key_${e.keyCode}`] = false;
-        Game.hero.updateState();
+        Game[`key_${e.keyCode}`] = false
+        Game.hero.updateState()
       }
     }
   },
 
   layout: () => {
-    _VAR_mjs__WEBPACK_IMPORTED_MODULE_1__["VAR"].H = window.innerHeight; // get window dimensions dynamically
-    _VAR_mjs__WEBPACK_IMPORTED_MODULE_1__["VAR"].W = window.innerWidth; // as above
+    _VAR_mjs__WEBPACK_IMPORTED_MODULE_1__["VAR"].H = window.innerHeight // get window dimensions dynamically
+    _VAR_mjs__WEBPACK_IMPORTED_MODULE_1__["VAR"].W = window.innerWidth // as above
 
     _VAR_mjs__WEBPACK_IMPORTED_MODULE_1__["VAR"].scale = Math.max(1, Math.min(
       Math.floor(_VAR_mjs__WEBPACK_IMPORTED_MODULE_1__["VAR"].H / (Game.board.frameWidth * Game.board.b[0].length)),
-      Math.floor(_VAR_mjs__WEBPACK_IMPORTED_MODULE_1__["VAR"].W / (Game.board.frameHeight * Game.board.b.length)),
-    ));
+      Math.floor(_VAR_mjs__WEBPACK_IMPORTED_MODULE_1__["VAR"].W / (Game.board.frameHeight * Game.board.b.length))
+    ))
 
-    Game.canvas.width = Math.round(_VAR_mjs__WEBPACK_IMPORTED_MODULE_1__["VAR"].scale * Game.board.frameWidth * Game.board.b[0].length); // as above
-    Game.canvas.height = Math.round(_VAR_mjs__WEBPACK_IMPORTED_MODULE_1__["VAR"].scale * Game.board.frameHeight * Game.board.b.length); // set canvas dimensions based on window dimensions
+    Game.canvas.width = Math.round(_VAR_mjs__WEBPACK_IMPORTED_MODULE_1__["VAR"].scale * Game.board.frameWidth * Game.board.b[0].length) // as above
+    Game.canvas.height = Math.round(_VAR_mjs__WEBPACK_IMPORTED_MODULE_1__["VAR"].scale * Game.board.frameHeight * Game.board.b.length) // set canvas dimensions based on window dimensions
 
-    Game.canvas.style[Modernizr.prefixed('transform')] = `translate(${Math.round((_VAR_mjs__WEBPACK_IMPORTED_MODULE_1__["VAR"].W - Game.canvas.width) / 2)}px, ${Math.round((_VAR_mjs__WEBPACK_IMPORTED_MODULE_1__["VAR"].H - Game.canvas.height) / 2)}px)`;
+    Game.canvas.style[Modernizr.prefixed('transform')] = `translate(${Math.round((_VAR_mjs__WEBPACK_IMPORTED_MODULE_1__["VAR"].W - Game.canvas.width) / 2)}px, ${Math.round((_VAR_mjs__WEBPACK_IMPORTED_MODULE_1__["VAR"].H - Game.canvas.height) / 2)}px)`
 
     // 'translate('+Math.round((VAR.W-Game.canvas.width)/2) + 'px,' +Math.round((VAR.H-Game.canvas.height)/2)+'px)';
-    Game.ctx.imageSmoothingEnabled = false; // character pixels are super sharp
-    Game.ctx.mozImageSmoothingEnabled = false;
-    Game.ctx.oImageSmoothingEnabled = false;
-    Game.ctx.webkitImageSmoothingEnabled = false;
+    Game.ctx.imageSmoothingEnabled = false // character pixels are super sharp
+    Game.ctx.mozImageSmoothingEnabled = false
+    Game.ctx.oImageSmoothingEnabled = false
+    Game.ctx.webkitImageSmoothingEnabled = false
   },
 
   animationLoop: (time) => {
-    requestAnimationFrame(Game.animationLoop);
+    requestAnimationFrame(Game.animationLoop)
     // limit fps to desired rate
     if (time - _VAR_mjs__WEBPACK_IMPORTED_MODULE_1__["VAR"].lastTime >= 1000 / _VAR_mjs__WEBPACK_IMPORTED_MODULE_1__["VAR"].fps) {
-      _VAR_mjs__WEBPACK_IMPORTED_MODULE_1__["VAR"].lastTime = time;
+      _VAR_mjs__WEBPACK_IMPORTED_MODULE_1__["VAR"].lastTime = time
 
-      Game.ctx.clearRect(0, 0, _VAR_mjs__WEBPACK_IMPORTED_MODULE_1__["VAR"].W, _VAR_mjs__WEBPACK_IMPORTED_MODULE_1__["VAR"].H);
+      Game.ctx.clearRect(0, 0, _VAR_mjs__WEBPACK_IMPORTED_MODULE_1__["VAR"].W, _VAR_mjs__WEBPACK_IMPORTED_MODULE_1__["VAR"].H)
 
-      Game.board.draw();
+      Game.board.draw()
 
       for (const i in Game.toDraw) {
-        Game.toDraw[i].draw();
+        Game.toDraw[i].draw()
       }
     }
-  },
-};
+  }
+}
 
 
 /***/ })
