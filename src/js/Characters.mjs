@@ -4,8 +4,6 @@ import {
 import {
   VAR
 } from './VAR.mjs'
-import { Bomb } from './Bomb.mjs'
-import { Board } from './Board.mjs'
 
 Character.count = 0
 
@@ -48,28 +46,26 @@ Character.prototype.draw = function () { // draw method prototype
   }
 
   // Game.ctx.fillRect(
-  //     this.column*Game.board.frameWidth*VAR.scale,
-  //     this.row*Game.board.frameHeight*VAR.scale,
-  //     Game.board.frameWidth*VAR.scale,
-  //     Game.board.frameHeight*VAR.scale
-  //     );
+  //   this.column * Game.board.frameWidth * VAR.scale,
+  //   this.row * Game.board.frameHeight * VAR.scale,
+  //   Game.board.frameWidth * VAR.scale,
+  //   Game.board.frameHeight * VAR.scale
+  // )
 
-  //     Game.ctx.fillRect(
-  //         this.nextColumn*Game.board.frameWidth*VAR.scale,
-  //         this.nextRow*Game.board.frameHeight*VAR.scale,
-  //         Game.board.frameWidth*VAR.scale,
-  //         Game.board.frameHeight*VAR.scale
-  //         );
+  // Game.ctx.fillRect(
+  //   this.nextColumn * Game.board.frameWidth * VAR.scale,
+  //   this.nextRow * Game.board.frameHeight * VAR.scale,
+  //   Game.board.frameWidth * VAR.scale,
+  //   Game.board.frameHeight * VAR.scale
+  // )
 
   if (Game.board.b[this.row][this.column].subtype == 'bomb' && Game.board.b[this.row][this.column].boomType) {
     this.setKO()
   }
 
-  {
-    if (this.states[this.state].flip) { // inverse image if 'flip' property is true
-      Game.ctx.save() // saving a given canvas state
-      Game.ctx.scale(-1, 1) // inversing canvas
-    }
+  if (this.states[this.state].flip) { // inverse image if 'flip' property is true
+    Game.ctx.save() // saving a given canvas state
+    Game.ctx.scale(-1, 1) // inversing canvas
   }
 
   Game.ctx.drawImage( // definig what part of image should be clipped
@@ -203,6 +199,8 @@ export function Hero () { // deifing main hero
 Hero.prototype = new Character(true) // extending Character draw method to Hero constructor
 Hero.prototype.constructor = Hero
 
+Hero.prototype.parent = Character.prototype // define to expand methods
+
 Hero.prototype.updateState = function () {
   this.tempState = this.state // temporary state variable
   if (Game.key_37) { // when arrow left is pressed then change temporary state to left_go
@@ -219,6 +217,35 @@ Hero.prototype.updateState = function () {
   if (this.tempState != this.state) { // check if state has changed
     this.currentFrame = 0
     this.state = this.tempState // reasign state to temporary state
+  }
+}
+
+Hero.prototype.setKO = function () {
+  this.parent.setKO.call(this)
+  Game.stop()
+}
+
+Hero.prototype.afterKO = function () {
+  if (!Game.isOver) {
+    Game.isOver = true
+    console.log('game over')
+  }
+}
+
+Hero.prototype.enemyHitTest = function () { // collision detection with enemies
+  for (let e in Enemy.all) {
+    e = Enemy.all[e]
+    if ((this.row == e.row && e.x + Game.board.frameWidth > this.x && e.x < this.x + Game.board.frameWidth) || (this.column == e.column && e.y + Game.board.frameHeight > this.y && e.y < this.y + Game.board.frameHeight)) {
+      return true
+    }
+  }
+  return false
+}
+
+Hero.prototype.draw = function () {
+  this.parent.draw.call(this)
+  if (this.state != 'ko' && this.enemyHitTest()) {
+    this.setKO()
   }
 }
 
@@ -332,5 +359,18 @@ Enemy.prototype.rowAndColumn = function () { // extending rowAndColumn method
 
   if (this.previousState != this.state && this.state.slice(-2) != 'go' && this.previousState.slice(-2) == 'go') {
     this.setDirection()
+  }
+}
+
+Enemy.prototype.afterKO = function () {
+  this.parent.afterKO.call(this) // expanding afterKO method
+  delete Enemy.all[this.id] // delete enemy from array stoirng it
+  let someEnemy = false
+  for (let e in Enemy.all) {
+    someEnemy = true
+    break
+  }
+  if (!someEnemy) {
+    console.log('success')
   }
 }

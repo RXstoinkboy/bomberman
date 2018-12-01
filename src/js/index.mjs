@@ -48,6 +48,11 @@ export let Game = {
     Game.animationLoop() // launch game animation loop
   },
 
+  stop: () => {
+    window.removeEventListener('keydown', Game.onKey)
+    window.removeEventListener('keyup', Game.onKey)
+  },
+
   onKey: (e) => {
     if (e.keyCode >= 37 && e.keyCode <= 40 || e.keyCode == 32) { // use only arrows and space in game
       e.preventDefault() // turn off standard key actions
